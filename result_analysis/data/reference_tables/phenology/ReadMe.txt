@@ -1,0 +1,1 @@
+Für Kartoffeln gibt es keine Referenzwerte für die Jahre, die für die Kalibrierung benutzt wurden (1999-2009), deshalb gibt es auch keine Tabelle für sie. Die alten Refernzwerte sind in der zip Datei zu finden.
