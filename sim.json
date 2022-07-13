@@ -51,7 +51,7 @@
 				["Mois|ssm36", [4, 6, "AVG"]],
 				["Mois|ssm69", [7, 9, "AVG"]]
 			],		
-			"Stage-2", [
+			"xxxx-01-01", [
 				"CM-count",
 				"DOY|s2doy",
 				["Mois|s2sm03", [1, 3, "AVG"]],
