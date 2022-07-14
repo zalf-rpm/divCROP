@@ -34,7 +34,7 @@
 				["Crop", "FIRST"],
 				["Year", "LAST"],
 				["Yield", "LAST"],
-				["Mois|sm-13-avg-sum", [1, 3, "AVG"], "SUM"]
+				["AbBiom", "LAST"]
 			]
 		],
 		"_events": [
