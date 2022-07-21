@@ -77,64 +77,31 @@ def create_output(msg):
     return cm_count_to_vals
 
 
-def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, path_to_csv_output_dir, setup_id):
+def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, path_to_csv_output_dir, setup_id, ic_id = "1"):
     "write grids row by row"
     
-    if not hasattr(write_row_to_grids, "nodata_row_count"):
-        write_row_to_grids.nodata_row_count = defaultdict(lambda: 0)
-        write_row_to_grids.list_of_output_files = defaultdict(list)
+    if not hasattr(write_row_to_grids, "ic"):
+        write_row_to_grids.nodata_row_count = defaultdict(lambda: defaultdict(lambda: 0))
+        write_row_to_grids.list_of_output_files = defaultdict(lambda: defaultdict(list))
 
     make_dict_nparr = lambda: defaultdict(lambda: np.full((ncols,), -9999, dtype=np.float))
     
-    output_grids = {
-        "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-        "sm-13-avg-sum": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-        
-        # "sdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"ssm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"ssm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"ssm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        
-        # "s2doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s2sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s2sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s2sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "sedoy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"sesm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"sesm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"sesm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "s3doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s3sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s3sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s3sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "s4doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s4sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s4sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s4sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "s5doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s5sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s5sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s5sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "s6doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s6sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s6sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s6sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "s7doy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"s7sm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s7sm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"s7sm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-
-        # "hdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
-        #"hsm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"hsm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
-        #"hsm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
+    output_grids_ic = {
+        "1": {
+            "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "sm-13-avg-sum": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            
+            # "sdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
+            #"ssm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
+            #"ssm36": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
+            #"ssm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
+        },
+        "2": {
+            "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "sm-46-sum-sum": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+        }
     }
+    output_grids = output_grids_ic[ic_id]
     output_keys = list(output_grids.keys())
 
     cmc_to_crop = {}
@@ -184,10 +151,10 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         is_no_data_row = no_data_cols == ncols
 
     if is_no_data_row:
-        write_row_to_grids.nodata_row_count[setup_id] += 1
+        write_row_to_grids.nodata_row_count[ic_id][setup_id] += 1
 
     def write_nodata_rows(file_):
-        for _ in range(write_row_to_grids.nodata_row_count[setup_id]):
+        for _ in range(write_row_to_grids.nodata_row_count[ic_id][setup_id]):
             rowstr = " ".join(["-9999" for __ in range(ncols)])
             file_.write(rowstr +  "\n")
 
@@ -209,7 +176,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             if not os.path.isfile(path_to_file):
                 with open(path_to_file, "w") as _:
                     _.write(header)
-                    write_row_to_grids.list_of_output_files[setup_id].append(path_to_file)
+                    write_row_to_grids.list_of_output_files[ic_id][setup_id].append(path_to_file)
 
             with open(path_to_file, "a") as file_:
                 write_nodata_rows(file_)
@@ -218,18 +185,18 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
 
     # clear the no-data row count when no-data rows have been written before a data row
     if not is_no_data_row:
-        write_row_to_grids.nodata_row_count[setup_id] = 0
+        write_row_to_grids.nodata_row_count[ic_id][setup_id] = 0
 
     # if we're at the end of the output and just empty lines are left, then they won't be written in the
     # above manner because there won't be any rows with data where they could be written before
     # so add no-data rows simply to all files we've written to before
     if is_no_data_row \
-        and write_row_to_grids.list_of_output_files[setup_id] \
-        and write_row_to_grids.nodata_row_count[setup_id] > 0:
-        for path_to_file in write_row_to_grids.list_of_output_files[setup_id]:
+        and write_row_to_grids.list_of_output_files[ic_id][setup_id] \
+        and write_row_to_grids.nodata_row_count[ic_id][setup_id] > 0:
+        for path_to_file in write_row_to_grids.list_of_output_files[ic_id][setup_id]:
             with open(path_to_file, "a") as file_:
                 write_nodata_rows(file_)
-        write_row_to_grids.nodata_row_count[setup_id] = 0
+        write_row_to_grids.nodata_row_count[ic_id][setup_id] = 0
     
     if row in row_col_data:
         del row_col_data[row]
@@ -339,9 +306,9 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
         "next-row": start_row
     })
 
-    def process_message(msg):
-        if len(msg["errors"]) > 0:
-            print("There were errors in message:", msg, "\nSkipping message!")
+    def process_message(msg_):
+        if len(msg_["errors"]) > 0:
+            print("There were errors in message:", msg_, "\nSkipping message!")
             return
 
         if not hasattr(process_message, "wnof_count"):
@@ -351,122 +318,128 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
         leave = False
 
         if not write_normal_output_files:
-            custom_id = msg["customId"]
-            setup_id = custom_id["setup_id"]
-            is_nodata = custom_id["nodata"]
+            
+            if not ("1" in msg_ or "2" in msg_):
+                msg_ = {"1": msg_}
 
-            data = setup_id_to_data[setup_id]
+            for ic_id, msg in msg_.items(): 
+                custom_id = msg["customId"]
+                setup_id = custom_id["setup_id"]
+                is_nodata = custom_id["nodata"]
 
-            row = custom_id["srow"]
-            col = custom_id["scol"]
-            #crow = custom_id.get("crow", -1)
-            #ccol = custom_id.get("ccol", -1)
-            #soil_id = custom_id.get("soil_id", -1)
+                data = setup_id_to_data[setup_id]
 
-            debug_msg = "received work result " + str(process_message.received_env_count) + " customId: " + str(msg.get("customId", "")) \
-            + " next row: " + str(data["next-row"]) \
-            + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) + " cells_per_row: " + str(datacells_per_row[row])#\
-            #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
-            print(debug_msg)
-            #debug_file.write(debug_msg + "\n")
-            if is_nodata:
-                data["row-col-data"][row][col] = -9999
-            else:
-                data["row-col-data"][row][col].append(create_output(msg))
-            data["datacell-count"][row] -= 1
+                row = custom_id["srow"]
+                col = custom_id["scol"]
+                #crow = custom_id.get("crow", -1)
+                #ccol = custom_id.get("ccol", -1)
+                #soil_id = custom_id.get("soil_id", -1)
 
-            process_message.received_env_count = process_message.received_env_count + 1
-
-            while (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0) \
-                or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][data["next-row"]] == 0):
-                
-                path_to_out_dir = config["out"] + str(setup_id) + "/"
-                path_to_csv_out_dir = config["csv-out"] + str(setup_id) + "/"
-                print(path_to_out_dir)
-                if not data["out_dir_exists"]:
-                    if os.path.isdir(path_to_out_dir) and os.path.exists(path_to_out_dir):
-                        data["out_dir_exists"] = True
-                    else:
-                        try:
-                            os.makedirs(path_to_out_dir)
-                            data["out_dir_exists"] = True
-                        except OSError:
-                            print("c: Couldn't create dir:", path_to_out_dir, "! Exiting.")
-                            exit(1)
-                    if os.path.isdir(path_to_csv_out_dir) and os.path.exists(path_to_csv_out_dir):
-                        data["out_dir_exists"] = True
-                    else:
-                        try:
-                            os.makedirs(path_to_csv_out_dir)
-                            data["out_dir_exists"] = True
-                        except OSError:
-                            print("c: Couldn't create dir:", path_to_csv_out_dir, "! Exiting.")
-                            exit(1)
-                
-                write_row_to_grids(data["row-col-data"], data["next-row"], data["ncols"], data["header"], \
-                    path_to_out_dir, path_to_csv_out_dir, setup_id)
-                
-                debug_msg = "wrote row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
+                debug_msg = "received work result " + str(process_message.received_env_count) + " customId: " + str(msg.get("customId", "")) \
+                + " next row: " + str(data["next-row"]) \
+                + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) + " cells_per_row: " + str(datacells_per_row[row])#\
+                #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
                 print(debug_msg)
                 #debug_file.write(debug_msg + "\n")
-                
-                data["next-row"] += 1 # move to next row (to be written)
+                if is_nodata:
+                    data["row-col-data"][row][col] = -9999
+                else:
+                    data["row-col-data"][row][col].append(create_output(msg))
+                data["datacell-count"][row] -= 1
 
-                if leave_after_finished_run \
-                and ((data["end_row"] < 0 and data["next-row"] > data["nrows"]-1) \
-                    or (data["end_row"] >= 0 and data["next-row"] > data["end_row"])): 
-                    process_message.setup_count += 1
-                
+                process_message.received_env_count = process_message.received_env_count + 1
+
+                while (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0) \
+                    or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][data["next-row"]] == 0):
+                    
+                    path_to_out_dir = config["out"] + str(setup_id) + "/"
+                    path_to_csv_out_dir = config["csv-out"] + str(setup_id) + "/"
+                    print(path_to_out_dir)
+                    if not data["out_dir_exists"]:
+                        if os.path.isdir(path_to_out_dir) and os.path.exists(path_to_out_dir):
+                            data["out_dir_exists"] = True
+                        else:
+                            try:
+                                os.makedirs(path_to_out_dir)
+                                data["out_dir_exists"] = True
+                            except OSError:
+                                print("c: Couldn't create dir:", path_to_out_dir, "! Exiting.")
+                                exit(1)
+                        if os.path.isdir(path_to_csv_out_dir) and os.path.exists(path_to_csv_out_dir):
+                            data["out_dir_exists"] = True
+                        else:
+                            try:
+                                os.makedirs(path_to_csv_out_dir)
+                                data["out_dir_exists"] = True
+                            except OSError:
+                                print("c: Couldn't create dir:", path_to_csv_out_dir, "! Exiting.")
+                                exit(1)
+                    
+                    write_row_to_grids(data["row-col-data"], data["next-row"], data["ncols"], data["header"], \
+                        path_to_out_dir, path_to_csv_out_dir, setup_id, ic_id)
+                    
+                    debug_msg = "wrote row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
+                    print(debug_msg)
+                    #debug_file.write(debug_msg + "\n")
+                    
+                    data["next-row"] += 1 # move to next row (to be written)
+
+                    if leave_after_finished_run \
+                    and ((data["end_row"] < 0 and data["next-row"] > data["nrows"]-1) \
+                        or (data["end_row"] >= 0 and data["next-row"] > data["end_row"])): 
+                        process_message.setup_count += 1
+                        
         elif write_normal_output_files:
 
-            if msg.get("type", "") in ["jobs-per-cell", "no-data", "setup_data"]:
-                #print "ignoring", result.get("type", "")
-                return
+            if not ("1" in msg_ or "2" in msg_):
+                msg_ = {"1": msg_}
 
-            print("received work result ", process_message.received_env_count, " customId: ", str(msg.get("customId", "")))
+            for ic_id, msg in msg_.items(): 
 
-            custom_id = msg["customId"]
-            setup_id = custom_id["setup_id"]
-            row = custom_id["srow"]
-            col = custom_id["scol"]
-            #crow = custom_id.get("crow", -1)
-            #ccol = custom_id.get("ccol", -1)
-            #soil_id = custom_id.get("soil_id", -1)
-            
-            process_message.wnof_count += 1
+                print("received work result ", process_message.received_env_count, " customId: ", str(msg.get("customId", "")))
 
-            path_to_out_dir = config["out"] + str(setup_id) + "/" + str(row) + "/"
-            print(path_to_out_dir)
-            if not os.path.exists(path_to_out_dir):
-                try:
-                    os.makedirs(path_to_out_dir)
-                except OSError:
-                    print("c: Couldn't create dir:", path_to_out_dir, "! Exiting.")
-                    exit(1)
+                custom_id = msg["customId"]
+                setup_id = custom_id["setup_id"]
+                row = custom_id["srow"]
+                col = custom_id["scol"]
+                #crow = custom_id.get("crow", -1)
+                #ccol = custom_id.get("ccol", -1)
+                #soil_id = custom_id.get("soil_id", -1)
+                
+                process_message.wnof_count += 1
 
-            #with open("out/out-" + str(i) + ".csv", 'wb') as _:
-            with open(path_to_out_dir + "col-" + str(col) + ".csv", "w", newline='') as _:
+                path_to_out_dir = config["out"] + str(setup_id) + "/" + "ic-" + str(ic_id) + "/" + str(row) + "/"
+                print(path_to_out_dir)
+                if not os.path.exists(path_to_out_dir):
+                    try:
+                        os.makedirs(path_to_out_dir)
+                    except OSError:
+                        print("c: Couldn't create dir:", path_to_out_dir, "! Exiting.")
+                        exit(1)
 
-                writer = csv.writer(_, delimiter=",")
-                for data_ in msg.get("data", []):
-                    results = data_.get("results", [])
-                    orig_spec = data_.get("origSpec", "")
-                    output_ids = data_.get("outputIds", [])
+                #with open("out/out-" + str(i) + ".csv", 'wb') as _:
+                with open(path_to_out_dir + "col-" + str(col) + ".csv", "w", newline='') as _:
 
-                    if len(results) > 0:
-                        writer.writerow([orig_spec.replace("\"", "")])
-                        for row in monica_io3.write_output_header_rows(output_ids,
-                                                                      include_header_row=True,
-                                                                      include_units_row=True,
-                                                                      include_time_agg=False):
-                            writer.writerow(row)
+                    writer = csv.writer(_, delimiter=",")
+                    for data_ in msg.get("data", []):
+                        results = data_.get("results", [])
+                        orig_spec = data_.get("origSpec", "")
+                        output_ids = data_.get("outputIds", [])
 
-                        for row in monica_io3.write_output(output_ids, results):
-                            writer.writerow(row)
+                        if len(results) > 0:
+                            writer.writerow([orig_spec.replace("\"", "")])
+                            for row in monica_io3.write_output_header_rows(output_ids,
+                                                                        include_header_row=True,
+                                                                        include_units_row=True,
+                                                                        include_time_agg=False):
+                                writer.writerow(row)
 
-                    writer.writerow([])
+                            for row in monica_io3.write_output(output_ids, results):
+                                writer.writerow(row)
 
-            process_message.received_env_count = process_message.received_env_count + 1
+                        writer.writerow([])
+
+                process_message.received_env_count = process_message.received_env_count + 1
 
         return leave
 
