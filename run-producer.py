@@ -47,7 +47,7 @@ PATHS = {
     "mbm-local-remote": {
         #"include-file-base-path": "/home/berg/GitHub/monica-parameters/", # path to monica-parameters
         "path-to-climate-dir": "/run/user/1000/gvfs/sftp:host=login01.cluster.zalf.de,user=rpm/beegfs/common/data/climate/", # mounted path to archive or hard drive with climate data
-        "monica-path-to-climate-dir": "/monica_data/climate-data/", # mounted path to archive accessable by monica executable
+        "monica-path-to-climate-dir": "/run/user/1000/gvfs/sftp:host=login01.cluster.zalf.de,user=rpm/beegfs/common/data/climate/", #/monica_data/climate-data/", # mounted path to archive accessable by monica executable
         "path-to-data-dir": "./data/", # mounted path to archive or hard drive with data
         "path-debug-write-folder": "./debug-out/",
     },
@@ -80,7 +80,7 @@ DEBUG_WRITE_FOLDER = "./debug_out"
 DEBUG_WRITE_CLIMATE = False
 
 # commandline parameters e.g "server=localhost port=6666 shared_id=2"
-def run_producer(server = {"server": None, "port": None}, shared_id = None):
+def run_producer(server = {"server": "localhost", "port": None}, shared_id = None):
     "main"
 
     context = zmq.Context()
@@ -207,7 +207,7 @@ def run_producer(server = {"server": None, "port": None}, shared_id = None):
         scenario = setup["scenario"]
         ensmem = setup["ensmem"]
         version = setup["version"]
-        crop_id = {"1": setup["crop-id-1"], "2": setup["crop-id-1"]}
+        crop_id = {"1": setup["crop-id-1"], "2": setup["crop-id-2"]}
 
         ## extract crop_id from crop-id name that has possible an extenstion
         crop_id_short = {"1": crop_id["1"].split('_')[0], "2": crop_id["2"].split('_')[0]}
@@ -256,7 +256,7 @@ def run_producer(server = {"server": None, "port": None}, shared_id = None):
 
         # set the current crop used for this run id
         for i, crop_id_ in crop_id.items():
-            crop_json["cropRotation"+str(i)][2] = crop_id_
+            crop_json["cropRotation"+(i if i == "2" else "")][2] = crop_id_
 
         # create environment template from json templates
         env_template = monica_io3.create_env_json_from_json_config({
@@ -344,7 +344,7 @@ def run_producer(server = {"server": None, "port": None}, shared_id = None):
 
                 for i, crop_id_s in crop_id_short.items():
 
-                    worksteps = env_template["cropRotation"+str(i)][0]["worksteps"]
+                    worksteps = env_template["cropRotation"+(i if i == "2" else "")][0]["worksteps"]
                     sowing_ws = next(filter(lambda ws: ws["type"][-6:] == "Sowing", worksteps))
                     harvest_ws = next(filter(lambda ws: ws["type"][-7:] == "Harvest", worksteps))
 

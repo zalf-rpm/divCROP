@@ -202,7 +202,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         del row_col_data[row]
 
 
-def run_consumer(leave_after_finished_run = True, server = {"server": None, "port": None}, shared_id = None):
+def run_consumer(leave_after_finished_run = True, server = {"server": "localhost", "port": None}, shared_id = None):
     "collect data from workers"
 
     config = {
@@ -307,8 +307,12 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     })
 
     def process_message(msg_):
-        if len(msg_["errors"]) > 0:
-            print("There were errors in message:", msg_, "\nSkipping message!")
+
+        if not ("1" in msg_ or "2" in msg_):
+                msg_ = {"1": msg_}
+
+        if len(msg_["1"]["errors"]) > 0:
+            print("There were errors in message:", msg_["1"], "\nSkipping message!")
             return
 
         if not hasattr(process_message, "wnof_count"):
@@ -319,9 +323,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
 
         if not write_normal_output_files:
             
-            if not ("1" in msg_ or "2" in msg_):
-                msg_ = {"1": msg_}
-
+            
             for ic_id, msg in msg_.items(): 
                 custom_id = msg["customId"]
                 setup_id = custom_id["setup_id"]
@@ -390,9 +392,6 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                         process_message.setup_count += 1
                         
         elif write_normal_output_files:
-
-            if not ("1" in msg_ or "2" in msg_):
-                msg_ = {"1": msg_}
 
             for ic_id, msg in msg_.items(): 
 
