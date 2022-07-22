@@ -294,7 +294,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": "localhost
     start_row = int(config["start-row"])
     end_row = int(config["end-row"])
     ncols = int(soil_metadata["ncols"])
-    setup_id_to_data = defaultdict(lambda: {
+    setup_id_to_ic_id_to_data = defaultdict(lambda: defaultdict(lambda: {
         "start_row": start_row,
         "end_row": end_row,
         "nrows": end_row - start_row + 1 if start_row > 0 and end_row >= start_row else int(soil_metadata["nrows"]),
@@ -304,7 +304,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": "localhost
         "row-col-data": defaultdict(lambda: defaultdict(list)),
         "datacell-count": datacells_per_row.copy(),
         "next-row": start_row
-    })
+    }))
 
     def process_message(msg_):
 
@@ -322,14 +322,13 @@ def run_consumer(leave_after_finished_run = True, server = {"server": "localhost
         leave = False
 
         if not write_normal_output_files:
-            
-            
+
             for ic_id, msg in msg_.items(): 
                 custom_id = msg["customId"]
                 setup_id = custom_id["setup_id"]
                 is_nodata = custom_id["nodata"]
 
-                data = setup_id_to_data[setup_id]
+                data = setup_id_to_ic_id_to_data[setup_id][ic_id]
 
                 row = custom_id["srow"]
                 col = custom_id["scol"]
@@ -433,7 +432,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": "localhost
                                                                         include_time_agg=False):
                                 writer.writerow(row)
 
-                            for row in monica_io3.write_output(output_ids, results):
+                            for row in monica_io3.write_output_obj(output_ids, results):
                                 writer.writerow(row)
 
                         writer.writerow([])
