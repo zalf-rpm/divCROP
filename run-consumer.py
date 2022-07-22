@@ -202,7 +202,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         del row_col_data[row]
 
 
-def run_consumer(leave_after_finished_run = True, server = {"server": "localhost", "port": None}, shared_id = None):
+def run_consumer(leave_after_finished_run = True, server = {"server": None, "port": None}, shared_id = None):
     "collect data from workers"
 
     config = {

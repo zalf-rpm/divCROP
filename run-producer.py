@@ -80,7 +80,7 @@ DEBUG_WRITE_FOLDER = "./debug_out"
 DEBUG_WRITE_CLIMATE = False
 
 # commandline parameters e.g "server=localhost port=6666 shared_id=2"
-def run_producer(server = {"server": "localhost", "port": None}, shared_id = None):
+def run_producer(server = {"server": None, "port": None}, shared_id = None):
     "main"
 
     context = zmq.Context()
