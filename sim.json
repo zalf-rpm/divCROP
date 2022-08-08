@@ -43,7 +43,7 @@
 				["Crop", "FIRST"],
 				["Year", "LAST"],
 				["Yield", "LAST"],
-				["Mois|sm-46-sum-sum", [4, 6, "SUM"], "SUM"]
+				["AbBiom", "LAST"]
 			]
 		]
 	},
