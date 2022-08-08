@@ -169,6 +169,21 @@ def write_output(output_ids, values, round_ids={}):
             out.append(row)
     return out
 
+def write_output_obj(output_ids, values, round_ids={}):
+    "write actual output lines"
+    out = []
+    for obj in values:
+        row = []
+        for oid in output_ids:
+            oid_name = oid["displayName"] if len(oid["displayName"]) > 0 else oid["name"]
+            j__ = obj.get(oid_name, "")
+            if isinstance(j__, list):
+                for jv_ in j__:
+                    row.append(round(jv_, round_ids[oid_name]) if oid_name in round_ids else jv_)
+            else:
+                row.append(round(j__, round_ids[oid_name]) if oid_name in round_ids else j__)
+        out.append(row)
+    return out
 
 def is_absolute_path(p):
     "is absolute path"
@@ -634,8 +649,10 @@ def create_env_json_from_json_config(crop_site_sim):
 
     env["params"] = cpp
     env["cropRotation"] = cropj.get("cropRotation", None)
+    env["cropRotation2"] = cropj.get("cropRotation2", None)
     env["cropRotations"] = cropj.get("cropRotations", None)
     env["events"] = simj["output"]["events"]
+    env["events2"] = simj["output"].get("events2", None)
     env["outputs"] = {"obj-outputs?": simj["output"].get("obj-outputs?", False)}
 
     env["pathToClimateCSV"] = simj["climate.csv"]
