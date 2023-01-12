@@ -60,7 +60,7 @@
   ],
   "CropHeightP1":6,
   "CropHeightP2":0.5,
-  "CropSpecificMaxRootingDepth":1.3,
+  "CropSpecificMaxRootingDepth":2,
   "DaylengthRequirement":[  
     [  
       0,
@@ -114,7 +114,7 @@
       "organId":4,
       "type":"YieldComponent",
       "yieldDryMatter":0.86,
-      "yieldPercentage":0.8
+      "yieldPercentage":0.7
     }
   ],
   "OrganIdsForSecondaryYield":[  
@@ -196,12 +196,12 @@
   ],
   "StageTemperatureSum":[  
     [  
-      100,
-      250,
-      20,
-      250,
-      150,
-      25
+      40,
+      340,
+      105,
+      300,
+      120,
+      500
     ],
     "°C d"
   ],

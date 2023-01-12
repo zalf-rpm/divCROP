@@ -124,7 +124,7 @@
     {  
       "organId":4,
       "type":"YieldComponent",
-      "yieldDryMatter":0.859999999,
+      "yieldDryMatter":0.85999999999999999,
       "yieldPercentage":0.55
     }
   ],
@@ -205,12 +205,12 @@
   "StageTemperatureSum":[  
     [  
       200,
-      200,
+      140,
       10,
-      110,
-      100,
-      300,
-      10
+      130,
+      210,
+      400,
+      500
     ],
     "°C d"
   ],
