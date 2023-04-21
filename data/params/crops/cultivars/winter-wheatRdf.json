@@ -60,7 +60,7 @@
   ],
   "CropHeightP1":6,
   "CropHeightP2":0.5,
-  "CropSpecificMaxRootingDepth":2,
+  "CropSpecificMaxRootingDepth":1.3,
   "DaylengthRequirement":[  
     [  
       0,
@@ -94,7 +94,7 @@
   "LowTemperatureExposure":0.654,
   "MaxAssimilationRate":30,
   "MaxCropHeight":[  
-    0.69,
+    0.83,
     "m"
   ],
   "OptimumTemperature":[  
@@ -114,7 +114,7 @@
       "organId":4,
       "type":"YieldComponent",
       "yieldDryMatter":0.86,
-      "yieldPercentage":0.7895625
+      "yieldPercentage":0.65
     }
   ],
   "OrganIdsForSecondaryYield":[  
@@ -185,29 +185,24 @@
   ],
   "StageKcFactor":[  
     [  
-      0.6,
-      0.8,
-      1.0,
-      1.0,
+      0.4,
       0.7,
+      1.1,
+      1.1,
+      0.8,
       0.25
     ],
     "1;0"
   ],
   "StageTemperatureSum":[  
     [  
-      37.6875,
-            677.9375,
-            232.6875,
-            56.6375,
-            119.8125,
-            500.0
+      40,360,130,210,120,200
     ],
     "°C d"
   ],
   "VernalisationRequirement":[  
     0,
-    30,
+    50,
     0,
     0,
     0,

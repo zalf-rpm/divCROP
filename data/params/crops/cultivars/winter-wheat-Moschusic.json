@@ -75,9 +75,9 @@
   "Description":"",
   "DroughtStressThreshold":[  
     1,
+    1,
+    1,
     0.9,
-    1,
-    1,
     0.9,
     0.8
   ],
@@ -94,7 +94,7 @@
   "LowTemperatureExposure":0.654,
   "MaxAssimilationRate":30,
   "MaxCropHeight":[  
-    0.69,
+    0.82,
     "m"
   ],
   "OptimumTemperature":[  
@@ -114,7 +114,7 @@
       "organId":4,
       "type":"YieldComponent",
       "yieldDryMatter":0.86,
-      "yieldPercentage":0.7895625
+      "yieldPercentage":0.66799
     }
   ],
   "OrganIdsForSecondaryYield":[  
@@ -185,22 +185,22 @@
   ],
   "StageKcFactor":[  
     [  
-      0.6,
+      0.4,
       0.8,
-      1.0,
-      1.0,
-      0.7,
+      1,
+      1,
+      0.8,
       0.25
     ],
     "1;0"
   ],
   "StageTemperatureSum":[  
     [  
-      37.6875,
-            677.9375,
-            232.6875,
-            56.6375,
-            119.8125,
+      70.195,
+            604.325,
+            120.1,
+            116.29999999999998,
+            217.75,
             500.0
     ],
     "°C d"
