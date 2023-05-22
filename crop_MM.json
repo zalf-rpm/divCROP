@@ -4,16 +4,16 @@
 		"WW_RGT": {
 			"is-winter-crop": true,
 			"cropParams": {
-				"species": ["include-from-file", "crops/species/wheat.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-RGT.json"]
+				"species": ["include-from-file", "crops/species/wheatic.json"],
+				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-RGTic.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/wheat.json"]
 		},
 		"WW_Mo": {
 			"is-winter-crop": true,
 			"cropParams": {
-				"species": ["include-from-file", "crops/species/wheat.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-Moschus.json"]
+				"species": ["include-from-file", "crops/species/wheatic.json"],
+				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-Moschusic.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/wheat.json"]
 		},
@@ -72,8 +72,8 @@
 		},
 		"Soy": {
 			"cropParams": {
-				"species": ["include-from-file", "crops/species/soybean.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/soybean-Merlin.json"]
+				"species": ["include-from-file", "crops/species/soybeanic.json"],
+				"cultivar": ["include-from-file", "crops/cultivars/Merlinic.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/soybean.json"]
 		}
@@ -87,7 +87,7 @@
 		"WW_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
+					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
 				},
 				{
 					"type": "NDemandFertilization",
@@ -132,259 +132,51 @@
 				}
 			]
 		}],
-		"WB_sfix_hauto": [{
+		"WM_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-09-22", "type": "Sowing", "crop": ["ref", "crops", "WB_dwd"] 
+					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
 				},
 				{
-					"type": "NDemandFertilization",
-					"days": 55,
-					"after": "Sowing",
-					"N-demand": [50.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				  {
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [90.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date": "0001-09-05",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				}
-			]
-		}],
-		"WR_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-09-22", "type": "Sowing", "crop": ["ref", "crops", "WR_dwd"] 
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 55,
-					"after": "Sowing",
-					"N-demand": [50.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				  {
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [90.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date": "0001-09-05",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				}
-			]
-		}],
-		"SB_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-03-01", "type": "Sowing", "crop": ["ref", "crops", "SB_dwd"] 
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 55,
-					"after": "Sowing",
-					"N-demand": [50.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				  {
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [90.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date": "0000-09-07",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				}
-			]
-		}],
-		"WRa_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-09-22", "type": "Sowing", "crop": ["ref", "crops", "WRa_dwd"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 1,
-					"after": "Sowing",
-					"N-demand": [55.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				  {
 					"type": "NDemandFertilization",
 					"days": 60,
 					"after": "Sowing",
-					"N-demand": [75.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				{
-					"type": "NDemandFertilization",
-					"days": 120,
-					"after": "Sowing",
 					"N-demand": [40.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				  },
-				{
-					"type": "AutomaticHarvest",
-					"latest-date": "0001-08-15",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				}
-			]
-		}],
-		"SM_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-03-31", "type": "Sowing", "crop": ["ref", "crops", "SM_dwd"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 1,
-					"after": "Sowing",
-					"N-demand": [110.0, "kg"],
 					"depth": [0.3, "m"],
 					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
 				},
 				{
 					"type": "NDemandFertilization",
-					"days": 30,
+					"days": 120,
 					"after": "Sowing",
-					"N-demand": [105.0, "kg"],
+					"N-demand": [80.0, "kg"],
 					"depth": [0.9, "m"],
 					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
 				},
 				{
-					"type": "AutomaticHarvest",
-					"latest-date": "0000-10-31",
+					"type": "NDemandFertilization",
+					"days": 150,
+					"after": "Sowing",
+					"N-demand": [40.0, "kg"],
+					"depth": [0.9, "m"],
+					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				},
+				{ 
+					"type": "AutomaticHarvest", 
+					"latest-date": "0001-09-05",
 					"min-%-asw": 0,
 					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 5,
-					"max-curr-day-precip": 0.5,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
 					"type": "OrganicFertilization",
 					"days": 1,
 					"after": "Harvest",
-					"amount": [15000, "kg"],
+					"amount": [15000, "kg N"],
 					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
 					"incorporation": true
-				  }
-			]
-		}],
-		"SU_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-04-01", "type": "Sowing", "crop": ["ref", "crops", "SU_dwd"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 60,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.3, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 120,
-					"after": "Sowing",
-					"N-demand": [80.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "AutomaticHarvest",
-					"latest-date": "0000-10-25",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 5,
-					"max-curr-day-precip": 0.5,
-					"harvest-time": "maturity"
-				}
-			]
-		}],
-		"PO_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-04-01", "type": "Sowing", "crop": ["ref", "crops", "PO"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 60,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.3, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 120,
-					"after": "Sowing",
-					"N-demand": [80.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "AutomaticHarvest",
-					"latest-date": "0000-09-15",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 5,
-					"max-curr-day-precip": 0.5,
-					"harvest-time": "maturity"
 				}
 			]
 		}],
