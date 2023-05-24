@@ -90,8 +90,9 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         "1": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            "TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             # define Gendrou as the median of transpiration deficit during generative phase
             # "sdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
             #"ssm03": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
@@ -101,8 +102,9 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         "2": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            "TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
         }
     }
     output_grids = output_grids_ic[ic_id]

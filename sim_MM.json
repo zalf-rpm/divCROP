@@ -35,11 +35,7 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
-				["Mois|SoilAvW", [1, 20, "SUM"], "LAST"]
-			],
-
-		    ["from", "anthesis", "to", "Harvest"], [
-				["TraDef|Gendrou", "MEDIAN"]
+				["TraDef|tradefavg", "AVG"]
 			]
 		],
 		"events2": [
@@ -49,11 +45,7 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
-				["Mois|SoilAvW", [1, 20, "SUM"], "LAST"]
-			],
-
-			["from", "anthesis", "to", "Harvest"], [
-				["TraDef|Gendrou", "MEDIAN"]
+				["TraDef|tradefavg", "AVG"]
 			]
 		]
 	},
