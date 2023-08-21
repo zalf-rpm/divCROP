@@ -51,7 +51,7 @@
     "h"
   ],
   "BeginSensitivePhaseHeatStress":[  
-    420,
+    620,
     "°C d"
   ],
   "CriticalTemperatureHeatStress":[  
@@ -75,14 +75,14 @@
   "Description":"",
   "DroughtStressThreshold":[  
     1,
-    0.8,
     1,
     1,
-    0.9,
+    1,
+    1,
     1
   ],
   "EndSensitivePhaseHeatStress":[  
-    1220,
+    740,
     "°C d"
   ],
   "FrostDehardening":5.05,
@@ -114,7 +114,7 @@
       "organId":4,
       "type":"YieldComponent",
       "yieldDryMatter":0.86,
-      "yieldPercentage":0.59
+      "yieldPercentage":0.7682318
     }
   ],
   "OrganIdsForSecondaryYield":[  
@@ -187,20 +187,20 @@
     [  
       0.4,
       1,
-      0.9,
-      0.9,
-      0.9,
+      1.2,
+      1.2,
+      1,
       0.25
     ],
     "1;0"
   ],
   "StageTemperatureSum":[  
-    [ 131.32,
-    328.45,
-    152.37,
-    212.85,
-    225.96,
-    500
+    [  220.705,
+    299.055,
+    235.615,
+    224.845,
+    277.875,
+    498.3
     ],
     "°C d"
   ],
