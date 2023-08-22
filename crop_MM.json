@@ -116,10 +116,6 @@
 				{ 
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-09-05",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
@@ -188,10 +184,6 @@
 				{
 					"type": "AutomaticHarvest",
 					"latest-date": "0001-10-31",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 5,
-					"max-curr-day-precip": 0.5,
 					"harvest-time": "maturity"
 				}
 			]
