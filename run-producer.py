@@ -156,7 +156,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     soil_epsg_code = int(path_to_soil_grid.split("/")[-1].split("_")[2])
     soil_crs = CRS.from_epsg(soil_epsg_code)
     if wgs84_crs not in soil_crs_to_x_transformers:
-        soil_crs_to_x_transformers[wgs84_crs] = Transformer.from_crs(soil_crs, wgs84_crs)
+        soil_crs_to_x_transformers[wgs84_crs] = Transformer.from_crs(soil_crs, wgs84_crs, always_xy=True)
     soil_metadata, _ = Mrunlib.read_header(path_to_soil_grid)
     soil_grid = np.loadtxt(path_to_soil_grid, dtype=int, skiprows=6)
     print("read: ", path_to_soil_grid)
@@ -166,7 +166,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     dem_epsg_code = int(path_to_dem_grid.split("/")[-1].split("_")[2])
     dem_crs = CRS.from_epsg(dem_epsg_code)
     if dem_crs not in soil_crs_to_x_transformers:
-        soil_crs_to_x_transformers[dem_crs] = Transformer.from_crs(soil_crs, dem_crs)
+        soil_crs_to_x_transformers[dem_crs] = Transformer.from_crs(soil_crs, dem_crs, always_xy=True)
     dem_metadata, _ = Mrunlib.read_header(path_to_dem_grid)
     dem_grid = np.loadtxt(path_to_dem_grid, dtype=float, skiprows=6)
     dem_interpolate = Mrunlib.create_ascii_grid_interpolator(dem_grid, dem_metadata)
@@ -177,7 +177,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     slope_epsg_code = int(path_to_slope_grid.split("/")[-1].split("_")[2])
     slope_crs = CRS.from_epsg(slope_epsg_code)
     if slope_crs not in soil_crs_to_x_transformers:
-        soil_crs_to_x_transformers[slope_crs] = Transformer.from_crs(soil_crs, slope_crs)
+        soil_crs_to_x_transformers[slope_crs] = Transformer.from_crs(soil_crs, slope_crs, always_xy=True)
     slope_metadata, _ = Mrunlib.read_header(path_to_slope_grid)
     slope_grid = np.loadtxt(path_to_slope_grid, dtype=float, skiprows=6)
     slope_interpolate = Mrunlib.create_ascii_grid_interpolator(slope_grid, slope_metadata)
@@ -188,7 +188,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     landuse_epsg_code = int(path_to_landuse_grid.split("/")[-1].split("_")[2])
     landuse_crs = CRS.from_epsg(landuse_epsg_code)
     if landuse_crs not in soil_crs_to_x_transformers:
-        soil_crs_to_x_transformers[landuse_crs] = Transformer.from_crs(soil_crs, landuse_crs)
+        soil_crs_to_x_transformers[landuse_crs] = Transformer.from_crs(soil_crs, landuse_crs, always_xy=True)
     landuse_meta, _ = Mrunlib.read_header(path_to_landuse_grid)
     landuse_grid = np.loadtxt(path_to_landuse_grid, dtype=int, skiprows=6)
     landuse_interpolate = Mrunlib.create_ascii_grid_interpolator(landuse_grid, landuse_meta)
@@ -199,7 +199,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     crop_epsg_code = int(path_to_crop_grid.split("/")[-1].split("_")[2])
     crop_crs = CRS.from_epsg(crop_epsg_code)
     if crop_crs not in soil_crs_to_x_transformers:
-        soil_crs_to_x_transformers[crop_crs] = Transformer.from_crs(soil_crs, crop_crs)
+        soil_crs_to_x_transformers[crop_crs] = Transformer.from_crs(soil_crs, crop_crs, always_xy=True)
     crop_meta, _ = Mrunlib.read_header(path_to_crop_grid)
     crop_grid = np.loadtxt(path_to_crop_grid, dtype=int, skiprows=6)
     crop_interpolate = Mrunlib.create_ascii_grid_interpolator(crop_grid, crop_meta)
