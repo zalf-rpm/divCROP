@@ -73,7 +73,7 @@
 		"Soy": {
 			"cropParams": {
 				"species": ["include-from-file", "crops/species/soybean.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/soybean-Merlin.json"]
+				"cultivar": ["include-from-file", "crops/cultivars/Merlin.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/soybean.json"]
 		}
@@ -116,10 +116,6 @@
 				{ 
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-09-05",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
@@ -444,10 +440,6 @@
 				{
 					"type": "AutomaticHarvest",
 					"latest-date": "0000-10-31",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 5,
-					"max-curr-day-precip": 0.5,
 					"harvest-time": "maturity"
 				}
 			]
@@ -462,9 +454,11 @@
 		"__enable_vernalisation_factor_fix__": true,
 		"intercropping": {
 			"is_intercropping": false,
-			"k_s": [0.6, "", "smaller crop canopy extinction coefficient"],
-			"k_t": [0.8, "", "taller crop canopy extinction coefficient"],
-			"PHredux": [[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], "", "plant height reduction factor at dev stage"]
+			"k_s": [0.612, "", "smaller crop canopy extinction coefficient"],
+			"k_t": [0.681, "", "taller crop canopy extinction coefficient"],
+			"PHredux": [0.5, "", "plant height reduction factor at dev stage"],
+			"DVS_PHr":[5.791262, "", "a variable derived from the field experiment for automatic PHredux calculation"],
+			"auto_PHredux": [false, "","calculating the PHredux automatically according to the equation or use fixed PHredux above"]
 		}
 	}
 }
