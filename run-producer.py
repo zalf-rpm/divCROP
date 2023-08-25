@@ -223,6 +223,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         ensmem = setup["ensmem"]
         version = setup["version"]
         crop_id = {"1": setup["crop-id-1"], "2": setup["crop-id-2"]}
+        sowing_date = {"1": setup["sowing-date-1"], "2": setup["sowing-date-2"]}
 
         ## extract crop_id from crop-id name that has possible an extenstion
         crop_id_short = {"1": crop_id["1"].split('_')[0], "2": crop_id["2"].split('_')[0]}
@@ -282,6 +283,8 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         # set the current crop used for this run id
         for i, crop_id_ in crop_id.items():
             crop_json["cropRotation" + (i if i == "2" else "")][2] = crop_id_
+            sowing_date_ = sowing_date[i]
+            crop_json["cropRotationTemplates"][crop_id_][0]["worksteps"][0]["date"] = sowing_date_
 
         # create environment template from json templates
         env_template = monica_io3.create_env_json_from_json_config({
