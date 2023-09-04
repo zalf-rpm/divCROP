@@ -435,11 +435,11 @@
 		"Soy_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-05-06", "type": "Sowing", "crop": ["ref", "crops", "Soy"]
+					"date": "0001-05-06", "type": "Sowing", "crop": ["ref", "crops", "Soy"]
 				},
 				{
 					"type": "AutomaticHarvest",
-					"latest-date": "0000-10-31",
+					"latest-date": "0001-10-31",
 					"harvest-time": "maturity"
 				}
 			]
