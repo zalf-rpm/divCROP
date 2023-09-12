@@ -35,7 +35,8 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
-				["TraDef", "AVG"]
+				["TraDef", "AVG"],
+				["LightInterception1", "SUM"]
 			]
 		],
 		"events2": [
@@ -45,7 +46,8 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
-				["TraDef", "AVG"]
+				["TraDef", "AVG"],
+				["LightInterception2", "SUM"]
 			]
 		]
 	},
