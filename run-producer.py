@@ -519,6 +519,10 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         sd = date(2023, int(sds[5:7]), int(sds[8:10])) + timedelta(days=delta_days)
                         sowing_ws["date"] = "{}-{:02d}-{:02d}".format(sds[0:4], sd.month, sd.day)
 
+                        hds = harvest_ws["latest-date"]
+                        hd = date(2023, int(hds[5:7]), int(hds[8:10])) + timedelta(days=delta_days)
+                        harvest_ws["latest-date"] = "{}-{:02d}-{:02d}".format(hds[0:4], hd.month, hd.day)
+
                 if len(soil_profile) == 0:
                     # print("row/col:", srow, "/", scol, "has unknown soil_id:", soil_id)
                     # unknown_soil_ids.add(soil_id)
