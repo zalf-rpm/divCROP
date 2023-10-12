@@ -87,7 +87,17 @@
 		"WW_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
+					"type": "AutomaticSowing",
+					"earliest-date": "0000-10-01",
+					"latest-date": "0000-11-10",
+					"min-temp": 18.5,
+					"days-in-temp-window": 14,
+					"min-%-asw": 0,
+					"max-%-asw": 99.9,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
+					"temp-sum-above-base-temp": 0,
+					"base-temp": 0
 				},
 				{
 					"type": "NDemandFertilization",
@@ -116,6 +126,10 @@
 				{ 
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-09-05",
+					"min-%-asw": 0,
+					"max-%-asw": 99.0,
+					"max-3d-precip-sum": 2,
+					"max-curr-day-precip": 0.1,
 					"harvest-time": "maturity"
 				},
 				{
