@@ -36,6 +36,7 @@
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
 				["TraDef", "AVG"],
+				["NDef", "AVG"],
 				["LightInterception1", "SUM"]
 			]
 		],
