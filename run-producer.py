@@ -224,6 +224,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         version = setup["version"]
         crop_id = {"1": setup.get("crop-id-1", None), "2": setup.get("crop-id-2", None)}
         sowing_date = {"1": setup.get("sowing-date-1", None), "2": setup.get("sowing-date-2", None)}
+        earliest_sowing_date = {"1": setup.get("earliest-sowing-date-1", None), "2": setup.get("earliest-sowing-date-2", None)}
         days_delta_sowing_date = {
             "1": setup.get("days-delta-sowing-date-1", None),
             "2": setup.get("days-delta-sowing-date-2", None)
@@ -288,8 +289,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         for i, crop_id_ in crop_id.items():
             crop_json["cropRotation" + (i if i == "2" else "")][2] = crop_id_
             sowing_date_ = sowing_date[i]
+            earliest_sowing_date_ = earliest_sowing_date[i]
             if sowing_date_ and len(sowing_date_) > 0:
-                crop_json["cropRotationTemplates"][crop_id_][0]["worksteps"][0]["date"] = sowing_date_
+                if earliest_sowing_date_ and len(earliest_sowing_date_) > 0:
+                    crop_json["cropRotationTemplates"][crop_id_][0]["worksteps"][0]["earliest-date"] = earliest_sowing_date_
+                    crop_json["cropRotationTemplates"][crop_id_][0]["worksteps"][0]["latest-date"] = sowing_date_
+                else:
+                    crop_json["cropRotationTemplates"][crop_id_][0]["worksteps"][0]["date"] = sowing_date_
 
         # create environment template from json templates
         env_template = monica_io3.create_env_json_from_json_config({
