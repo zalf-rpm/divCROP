@@ -190,7 +190,7 @@
 		"WM_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
+					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
 				},
 				{
 					"type": "NDemandFertilization",
