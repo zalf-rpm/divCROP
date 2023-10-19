@@ -34,11 +34,13 @@
 				["Crop", "FIRST"],
 				["Year", "LAST"],
 				["Yield", "LAST"],
-				["AbBiom", "LAST"],
-				["TraDef", "AVG"],
-				["NDef", "AVG"],
-				["LightInterception1", "SUM"]
-			]
+				["DOY|SowDOY", "FIRST"],
+				["while", "Stage", "=", 5], [
+					["DOY|AntDOY", "FIRST"]],
+				["while", "Stage", "=", 7], [
+					["DOY|MatDOY", "FIRST"]]
+					
+		]
 		],
 		"events2": [
 			"crop", [
