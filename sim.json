@@ -35,12 +35,12 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["DOY|SowDOY", "FIRST"],
-				["while", "Stage", "=", 5], [
-					["DOY|AntDOY", "FIRST"]],
-				["while", "Stage", "=", 7], [
-					["DOY|MatDOY", "FIRST"]]
-					
-		]
+				["DOY|HarDOY", "LAST"]
+			],
+			"anthesis", [
+				"CM-count",
+				"DOY|AntDOY"
+			]
 		],
 		"events2": [
 			"crop", [
