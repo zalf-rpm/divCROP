@@ -35,6 +35,7 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["DOY|SowDOY", "FIRST"],
+				["OxRed", "AVG"],
 				["DOY|HarDOY", "LAST"]
 			],
 			"anthesis", [
