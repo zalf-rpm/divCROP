@@ -36,7 +36,7 @@
 				["Yield", "LAST"],
 				["DOY|SowDOY", "FIRST"],
 				["OxRed", "AVG"],
-				["LightInterception1", "SUM"]
+				["LightInterception1", "SUM"],
 				["DOY|HarDOY", "LAST"]
 			],
 			"anthesis", [
