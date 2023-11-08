@@ -72,8 +72,8 @@
 		},
 		"Soy": {
 			"cropParams": {
-				"species": ["include-from-file", "crops/species/soybeanic.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/Merlinic.json"]
+				"species": ["include-from-file", "crops/species/soybean.json"],
+				"cultivar": ["include-from-file", "crops/cultivars/Merlin.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/soybean.json"]
 		}
