@@ -4,8 +4,8 @@
 		"WW_RGT": {
 			"is-winter-crop": true,
 			"cropParams": {
-				"species": ["include-from-file", "crops/species/wheatic.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-RGTic.json"]
+				"species": ["include-from-file", "crops/species/wheat.json"],
+				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-RGT.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/wheat.json"]
 		},
