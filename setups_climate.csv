@@ -1,0 +1,9 @@
+run-id,merge,temp_threshold,incl_hist,climate_path_to_latlon_file,climate_path_to_csvs,gcm,rcm,scenario,ensmem,version,start_date,end_date,landcover
+1,1,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,ICHEC-EC-EARTH,KNMI-RACMO22E,rcp45,r12i1p1,v1,1981-01-01,2010-12-31,FALSE
+2,1,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,MPI-M-MPI-ESM-LR,MPI-CSC-REMO2009,rcp45,r12i1p1,v1,1981-01-01,2010-12-31,FALSE
+3,2,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,ICHEC-EC-EARTH,KNMI-RACMO22E,rcp26,r12i1p1,v1,2031-01-01,2060-12-31,FALSE
+4,2,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,MIROC-MIROC5,CLMcom-CCLM4-8-17,rcp26,r1i1p1,v1,2031-01-01,2060-12-31,FALSE
+5,2,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,MPI-M-MPI-ESM-LR,MPI-CSC-REMO2009,rcp26,r2i1p1,v1,2031-01-01,2060-12-31,FALSE
+6,3,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,ICHEC-EC-EARTH,KNMI-RACMO22E,rcp85,r1i1p1,v1,2031-01-01,2060-12-31,FALSE
+7,3,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,MIROC-MIROC5,GERICS-REMO2015,rcp85,r1i1p1,v1,2031-01-01,2060-12-31,FALSE
+8,3,30,TRUE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble/{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv,MPI-M-MPI-ESM-LR,MPI-CSC-REMO2009,rcp85,r2i1p1,v1,2031-01-01,2060-12-31,FALSE
