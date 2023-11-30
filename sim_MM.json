@@ -36,7 +36,12 @@
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
 				["TraDef", "AVG"],
+				["DOY|HarDOY", "LAST"],
 				["LightInterception1", "SUM"]
+			],
+			"anthesis", [
+				"CM-count",
+				"DOY|AntDOY"
 			]
 		],
 		"events2": [
@@ -47,7 +52,12 @@
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
 				["TraDef", "AVG"],
+				["DOY|HarDOY", "LAST"],
 				["LightInterception2", "SUM"]
+			],
+			"anthesis", [
+				"CM-count",
+				"DOY|AntDOY"
 			]
 		]
 	},
