@@ -34,9 +34,11 @@
 				["Crop", "FIRST"],
 				["Year", "LAST"],
 				["Yield", "LAST"],
+				["AbBiom", "LAST"],
 				["DOY|SowDOY", "FIRST"],
 				["OxRed", "AVG"],
-				["LightInterception1", "SUM"],
+				["TraDef", "AVG"],
+				["NDef", "AVG"],
 				["DOY|HarDOY", "LAST"]
 			],
 			"anthesis", [
@@ -51,8 +53,15 @@
 				["Year", "LAST"],
 				["Yield", "LAST"],
 				["AbBiom", "LAST"],
+				["DOY|SowDOY", "FIRST"],
+				["OxRed", "AVG"],
 				["TraDef", "AVG"],
-				["LightInterception2", "SUM"]
+				["NDef", "AVG"],
+				["DOY|HarDOY", "LAST"]
+			],
+			"anthesis", [
+				"CM-count",
+				"DOY|AntDOY"
 			]
 		]
 	},
