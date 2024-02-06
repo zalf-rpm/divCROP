@@ -13,7 +13,7 @@
 			"is-winter-crop": true,
 			"cropParams": {
 				"species": ["include-from-file", "crops/species/wheat.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-RGT.json"]
+				"cultivar": ["include-from-file", "crops/cultivars/winter-wheat-Moschus.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/wheat.json"]
 		},
@@ -146,7 +146,7 @@
 		"WW_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
+					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
 				},
 				{
 					"type": "NDemandFertilization",
