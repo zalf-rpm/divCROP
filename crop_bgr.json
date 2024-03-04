@@ -1,4 +1,4 @@
-  {
+{
 	"__note__": "01/2022 : Final version for setups with fixed sowing dates, automatic harvest dates and phenology calibrated to DWD data. Adapted from HERMES2Go, BBG Project",
 	"crops": {
 		"WW_dwd": {
@@ -378,10 +378,19 @@
 		}]
 	},
 
-	"cropRotation": ["ref", "cropRotationTemplates", "WW"],
+	"cropRotation": ["ref", "cropRotationTemplates", "WW_sfix_hauto"],
+	"cropRotation2": ["ref", "cropRotationTemplates", "Soy_sfix_hauto"],
 	
 	"CropParameters": {
 		"=": ["include-from-file", "general/crop.json"],
-		"__enable_vernalisation_factor_fix__": true
+		"__enable_vernalisation_factor_fix__": true,
+		"intercropping": {
+			"is_intercropping": false,
+			"k_s": [0.612, "", "smaller crop canopy extinction coefficient"],
+			"k_t": [0.681, "", "taller crop canopy extinction coefficient"],
+			"PHredux": [0.5, "", "plant height reduction factor at dev stage"],
+			"DVS_PHr":[5.791262, "", "a variable derived from the field experiment for automatic PHredux calculation"],
+			"auto_PHredux": [false, "","calculating the PHredux automatically according to the equation or use fixed PHredux above"]
+		}
 	}
 }
