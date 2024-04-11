@@ -94,7 +94,7 @@
 	"cropRotationTemplates":{
 		"LBG1R7S": [
 		{
-			 "worksteps": [ { "date": "0000-08-30", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
+			 "worksteps": [ { "date": "0000-08-31", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
 				{
 					"date": "0000-08-31", "type": "Sowing", "crop": ["ref", "crops", "WRa_dwd"] 
 				},
