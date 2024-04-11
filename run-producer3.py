@@ -330,9 +330,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 break
 
             for scol in range(0, scols):
-                soil_id = int(soil_grid[srow, scol])
-                if soil_id == nodata_value:
-                    continue
+                #soil_id = int(soil_grid[srow, scol])
+                #if soil_id == nodata_value:
+                #    continue
 
                 # get coordinate of clostest climate element of real soil-cell
                 sh = yllcorner + (scellsize / 2) + (srows - srow - 1) * scellsize
@@ -384,11 +384,11 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 continue
                 """
 
-                if soil_id in soil_id_cache:
-                    soil_profile = soil_id_cache[soil_id]
-                else:
-                    soil_profile = soil_io3.soil_parameters(soil_db_con, soil_id)
-                    soil_id_cache[soil_id] = soil_profile
+                #if soil_id in soil_id_cache:
+                #    soil_profile = soil_id_cache[soil_id]
+                #else:
+                #    soil_profile = soil_io3.soil_parameters(soil_db_con, soil_id)
+                #    soil_id_cache[soil_id] = soil_profile
 
                 if False:
                     for i, crop_id_s in crop_id_short.items():
@@ -530,23 +530,23 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                             hd = date(2023, int(hds[5:7]), int(hds[8:10])) + timedelta(days=delta_days)
                             harvest_ws["latest-date"] = "{}-{:02d}-{:02d}".format(hds[0:4], hd.month, hd.day)
 
-                if len(soil_profile) == 0:
-                    # print("row/col:", srow, "/", scol, "has unknown soil_id:", soil_id)
-                    # unknown_soil_ids.add(soil_id)
-
-                    env_template["customId"] = {
-                        "setup_id": setup_id,
-                        "srow": srow, "scol": scol,
-                        "crow": int(crow), "ccol": int(ccol),
-                        "soil_id": soil_id,
-                        "env_id": sent_env_count,
-                        "nodata": True
-                    }
-                    if not DEBUG_DONOT_SEND:
-                        socket.send_json(env_template)
-                        # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
-                        sent_env_count += 1
-                    continue
+                #if len(soil_profile) == 0:
+                #    # print("row/col:", srow, "/", scol, "has unknown soil_id:", soil_id)
+                #    # unknown_soil_ids.add(soil_id)
+                #
+                #    env_template["customId"] = {
+                #        "setup_id": setup_id,
+                #        "srow": srow, "scol": scol,
+                #        "crow": int(crow), "ccol": int(ccol),
+                #        "soil_id": soil_id,
+                #        "env_id": sent_env_count,
+                #        "nodata": True
+                #    }
+                #    if not DEBUG_DONOT_SEND:
+                #        socket.send_json(env_template)
+                #        # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
+                #        sent_env_count += 1
+                #    continue
 
                 # check if current grid cell is used for agriculture                
                 if setup["landcover"]:
@@ -571,7 +571,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     "LeafExtensionModifier"]
 
                 # print("soil:", soil_profile)
-                env_template["params"]["siteParameters"]["SoilProfileParameters"] = soil_profile
+                #env_template["params"]["siteParameters"]["SoilProfileParameters"] = soil_profile
 
                 # setting groundwater level
                 if setup["groundwater-level"]:
