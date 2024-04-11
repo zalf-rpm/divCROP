@@ -89,7 +89,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
     output_grids_ic = {
         "1": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            #"AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             "SowDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
@@ -108,7 +108,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         },
         "2": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            #"AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "NLeach": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
