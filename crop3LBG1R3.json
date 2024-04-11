@@ -91,9 +91,10 @@
 		"U": ["include-from-file", "mineral-fertilisers/U.json"],
 		"CAM": ["include-from-file", "organic-fertilisers/CAM.json"]
 	}, 	
-	"cropRotationTemplates": [
+	"cropRotationTemplates":{
+		"LBG1R3": [
 		{
-			"worksteps": [
+			 "worksteps": [ { "date": "0000-09-29", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
 				{
 					"date": "0000-09-30", "type": "Sowing", "crop": ["ref", "crops", "WW"] 
 				},
@@ -125,18 +126,11 @@
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-08-30",
 					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
 				}
+				  
 			]},
 			{
-				"worksteps": [
+				 "worksteps": [ { "date": "0000-09-10", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
 					{
 						"date": "0000-09-11", "type": "Sowing", "crop": ["ref", "crops", "WB_dwd"] 
 					},
@@ -160,18 +154,10 @@
 						"type": "AutomaticHarvest", 
 						"latest-date": "0001-08-13",
 						"harvest-time": "maturity"
-					},
-					{
-						"type": "OrganicFertilization",
-						"days": 1,
-						"after": "Harvest",
-						"amount": [15000, "kg N"],
-						"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-						"incorporation": true
 					}
 				]},
 		{
-			"worksteps": [
+			 "worksteps": [ { "date": "0000-08-30", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
 				{
 					"date": "0000-08-31", "type": "Sowing", "crop": ["ref", "crops", "WRa_dwd"] 
 				},
@@ -203,18 +189,10 @@
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-07-25",
 					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
-				}
+				}		  
 			]},
 		{
-			"worksteps": [
+			 "worksteps": [ { "date": "0000-09-29", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
 				{
 					"date": "0000-09-30", "type": "Sowing", "crop": ["ref", "crops", "WW"] 
 				},
@@ -246,20 +224,13 @@
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-08-30",
 					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
 				}
+				  
 			]}						
-			],
+			]},
 				
 
-	"cropRotation": ["ref", "cropRotationTemplates"],
+	"cropRotation": ["ref", "cropRotationTemplates","LBG1R3"],
 	"CropParameters": {
 		"=": ["include-from-file", "general/crop.json"],
 		"__enable_vernalisation_factor_fix__": true,

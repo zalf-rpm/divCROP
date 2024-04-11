@@ -90,14 +90,15 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         "1": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             "SowDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
+            "NLeach": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "AntDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
             "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
-            "OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception1": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             # define Gendrou as the median of transpiration deficit during generative phase
             # "sdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
@@ -108,13 +109,14 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         "2": {
             "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
             "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            "NLeach": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             "AntDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
             "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
-            "OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception2": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
         }
     }
