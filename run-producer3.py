@@ -361,7 +361,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         "setup_id": setup_id,
                         "srow": srow, "scol": scol,
                         "crow": int(crow), "ccol": int(ccol),
-                        "soil_id": soil_id,
+                        #"soil_id": soil_id,
                         "env_id": sent_env_count,
                         "nodata": True
                     }
@@ -669,7 +669,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     "setup_id": setup_id,
                     "srow": srow, "scol": scol,
                     "crow": int(crow), "ccol": int(ccol),
-                    "soil_id": soil_id,
+                    #"soil_id": soil_id,
                     "env_id": sent_env_count,
                     "nodata": False
                 }
