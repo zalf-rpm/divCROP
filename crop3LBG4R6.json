@@ -151,7 +151,7 @@
 							},
 							{ 
 								"type": "AutomaticHarvest",
-								"latest-date": "0001-09-05",  
+								"latest-date": "0001-08-30",  
 								"harvest-time": "maturity"
 							} 
 						]},
@@ -205,7 +205,7 @@
 											},
 											{ 
 								"type": "AutomaticHarvest",
-								"latest-date": "0001-09-05", 
+								"latest-date": "0001-08-30", 
 								"harvest-time": "maturity"
 							} 
 										]}
