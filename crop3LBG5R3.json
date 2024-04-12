@@ -115,7 +115,8 @@
 								"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
 							},
 							{ 
-								"type": "AutomaticHarvest", 
+								"type": "AutomaticHarvest",
+								"latest-date": "0001-09-05",  
 								"harvest-time": "maturity"
 							} 
 						]},	
@@ -168,9 +169,10 @@
 												"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
 											},
 											{ 
-												"type": "AutomaticHarvest", 
-												"harvest-time": "maturity"
-											}
+								"type": "AutomaticHarvest",
+								"latest-date": "0001-09-05", 
+								"harvest-time": "maturity"
+							} 
 										]}
 			]},
 	"cropRotation": ["ref", "cropRotationTemplates", "LBG5R3"],
