@@ -134,8 +134,19 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     socket.connect("tcp://" + config["server"] + ":" + str(config["server-port"]))
 
     # read setup from csv file
+    #setups = Mrunlib.read_sim_setups(config["setups-file"])
+    #run_setups = json.loads(config["run-setups"])
+    #print("read sim setups: ", config["setups-file"])
     setups = Mrunlib.read_sim_setups(config["setups-file"])
-    run_setups = json.loads(config["run-setups"])
+    rs_ranges = config["run-setups"][1:-1].split(",")
+    run_setups = []
+    for rsr in rs_ranges:
+        rs_r = rsr.split("-")
+        if 1 < len(rs_r) <= 2:
+            run_setups.extend(range(int(rs_r[0]), int(rs_r[1]) + 1))
+        elif len(rs_r) == 1:
+            run_setups.append(int(rs_r[0]))
+    # run_setups = json.loads(config["run-setups"])
     print("read sim setups: ", config["setups-file"])
 
     # transforms geospatial coordinates from one coordinate reference system to another
