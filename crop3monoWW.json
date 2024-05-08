@@ -92,37 +92,44 @@
 		"CAM": ["include-from-file", "organic-fertilisers/CAM.json"]
 	}, 	
 	"cropRotationTemplates":{
-		"WR": [
-					{
-						 "worksteps": [ { "date": "0000-09-13", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
-							{
-								"date": "0000-09-14", "type": "Sowing", "crop": ["ref", "crops", "WR_dwd"] 
-							},
-							{
-								"type": "NDemandFertilization",
-								"days": 175,
-								"after": "Sowing",
-								"N-demand": [58.0, "kg"],
-								"depth": [0.3, "m"],
-								"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-							},
-							{
-								"type": "NDemandFertilization",
-								"days": 194,
-								"after": "Sowing",
-								"N-demand": [87.0, "kg"],
-								"depth": [0.9, "m"],
-								"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-							},
-							{ 
-								"type": "AutomaticHarvest",
-								"latest-date": "0001-08-30", 
-								"harvest-time": "maturity"
-							} 
-						]}
-									]},
-
-	"cropRotation": ["ref", "cropRotationTemplates", "WR"],
+		"WW": [
+		{
+			 "worksteps": [ { "date": "0000-09-29", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
+				{
+					"date": "0000-09-30", "type": "Sowing", "crop": ["ref", "crops", "WW"] 
+				},
+				{
+					"type": "NDemandFertilization",
+					"days": 161,
+					"after": "Sowing",
+					"N-demand": [58.0, "kg"],
+					"depth": [0.3, "m"],
+					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				},
+				{
+					"type": "NDemandFertilization",
+					"days": 172,
+					"after": "Sowing",
+					"N-demand": [125.0, "kg"],
+					"depth": [0.9, "m"],
+					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				},
+				{
+					"type": "NDemandFertilization",
+					"days": 222,
+					"after": "Sowing",
+					"N-demand": [57.0, "kg"],
+					"depth": [0.9, "m"],
+					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				},
+				{ 
+					"type": "AutomaticHarvest", 
+					"latest-date": "0001-08-30",
+					"harvest-time": "maturity"
+				}				  
+			]}
+			]},
+	"cropRotation": ["ref", "cropRotationTemplates","WW"],
 	"CropParameters": {
 		"=": ["include-from-file", "general/crop.json"],
 		"__enable_vernalisation_factor_fix__": true,
