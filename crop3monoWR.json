@@ -92,21 +92,37 @@
 		"CAM": ["include-from-file", "organic-fertilisers/CAM.json"]
 	}, 	
 	"cropRotationTemplates":{
-		"Soy": [
+		"WR": [
 			{
-				 "worksteps": [ { "date": "0000-04-29", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
-					{
-						"date": "0000-04-30", "type": "Sowing", "crop": ["ref", "crops", "Soy"] 
-					},
-					{ 
-						"type": "AutomaticHarvest",
-						"latest-date": "0000-09-29",  
-						"harvest-time": "maturity"
-					}
-				]}
+				"worksteps": [ { "date": "0000-09-13", "type": "SetValue", "var": ["Mois", [1,20]], "value": ["Fc", [1,20]] },
+				   {
+					   "date": "0000-09-14", "type": "Sowing", "crop": ["ref", "crops", "WR_dwd"] 
+				   },
+				   {
+					   "type": "NDemandFertilization",
+					   "days": 175,
+					   "after": "Sowing",
+					   "N-demand": [58.0, "kg"],
+					   "depth": [0.3, "m"],
+					   "partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				   },
+				   {
+					   "type": "NDemandFertilization",
+					   "days": 194,
+					   "after": "Sowing",
+					   "N-demand": [87.0, "kg"],
+					   "depth": [0.9, "m"],
+					   "partition": ["include-from-file", "mineral-fertilisers/AN.json"]
+				   },
+				   { 
+					   "type": "AutomaticHarvest",
+					   "latest-date": "0001-08-30",  
+					   "harvest-time": "maturity"
+				   } 
+			   ]}
 						
 			]},
-	"cropRotation": ["ref", "cropRotationTemplates","Soy"],
+	"cropRotation": ["ref", "cropRotationTemplates","WR"],
 	"CropParameters": {
 		"=": ["include-from-file", "general/crop.json"],
 		"__enable_vernalisation_factor_fix__": true,
