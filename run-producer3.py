@@ -656,17 +656,17 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 env_template["pathToClimateCSV"] = [paths["monica-path-to-climate-dir"] + subpath_to_csv]
                 if setup["incl_hist"]:
 
-                    if rcm[:3] == "UHO":
-                        hist_subpath_to_csv = setup["climate_path_to_csvs"].format_map(
-                            dict(repl_map, rcm="CLMcom-CCLM4-8-17", scenario="historical"))
-                        env_template["pathToClimateCSV"].insert(0, paths[
-                            "monica-path-to-climate-dir"] + hist_subpath_to_csv)
+                    #if rcm[:3] == "UHO":
+                    #    hist_subpath_to_csv = setup["climate_path_to_csvs"].format_map(
+                    #        dict(repl_map, rcm="CLMcom-CCLM4-8-17", scenario="historical"))
+                    #    env_template["pathToClimateCSV"].insert(0, paths[
+                    #        "monica-path-to-climate-dir"] + hist_subpath_to_csv)
 
-                    elif rcm[:3] == "SMH":
-                        hist_subpath_to_csv = setup["climate_path_to_csvs"].format_map(
-                            dict(repl_map, rcm="CLMcom-CCLM4-8-17", scenario="historical"))
-                        env_template["pathToClimateCSV"].insert(0, paths[
-                            "monica-path-to-climate-dir"] + hist_subpath_to_csv)
+                    #elif rcm[:3] == "SMH":
+                    #    hist_subpath_to_csv = setup["climate_path_to_csvs"].format_map(
+                    #        dict(repl_map, rcm="CLMcom-CCLM4-8-17", scenario="historical"))
+                    #    env_template["pathToClimateCSV"].insert(0, paths[
+                    #        "monica-path-to-climate-dir"] + hist_subpath_to_csv)
 
                     hist_subpath_to_csv = setup["climate_path_to_csvs"].format_map(
                         dict(repl_map, scenario="historical"))
