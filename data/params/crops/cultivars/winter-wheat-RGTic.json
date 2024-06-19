@@ -75,11 +75,11 @@
   "Description":"",
   "DroughtStressThreshold":[  
     1,
+    0.9,
     1,
     1,
-    1,
-    1,
-    1
+    0.9,
+    0.8
   ],
   "EndSensitivePhaseHeatStress":[  
     740,
@@ -114,7 +114,7 @@
       "organId":4,
       "type":"YieldComponent",
       "yieldDryMatter":0.86,
-      "yieldPercentage":0.7682318
+      "yieldPercentage":0.8298687499999999
     }
   ],
   "OrganIdsForSecondaryYield":[  
@@ -158,13 +158,13 @@
     ],
     [  
       0,
-      0.05,
+      0.08,
       0,
       0
     ],
     [  
       0,
-      0.05,
+      0.07,
       0,
       0
     ]
@@ -174,9 +174,9 @@
   "RespiratoryStress":0.54,
   "SpecificLeafArea":[  
     [  
-      0.002,
-      0.0018,
       0.0017,
+      0.0017,
+      0.0016,
       0.0016,
       0.0015,
       0.0015
@@ -186,27 +186,27 @@
   "StageKcFactor":[  
     [  
       0.4,
+      0.6,
       1,
-      1.2,
-      1.2,
       1,
+      0.6,
       0.25
     ],
     "1;0"
   ],
   "StageTemperatureSum":[  
-    [  220.705,
-    299.055,
-    235.615,
-    224.845,
-    277.875,
-    498.3
+    [  220.57,
+    189.525,
+    287.391,
+    508.91,
+    105.48,
+    25.0
     ],
     "°C d"
   ],
   "VernalisationRequirement":[  
     0,
-    30,
+    40,
     0,
     0,
     0,

@@ -68,7 +68,7 @@
 	"RootDistributionParam": 0.00278700003400445,
 	"RootFormFactor": 3,
 	"RootGrowthLag": -30,
-	"RootPenetrationRate": 0.0006818125,
+	"RootPenetrationRate": 0.0005046,
 	"SamplingDepth": 0.8999999761581421,
 	"SpeciesName": "soybean",
 	"SpecificRootLength": 300,
