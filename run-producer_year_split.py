@@ -713,11 +713,21 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 elif setup["harvest-date"] == "auto":
                     print("Harvest-date:", harvest_ws["latest-date"])
 
+                # climate list 
+                backupClimateDataList = env_template["pathToClimateCSV"]
+                # hardcoded switch date for climate data 2005-01-01
+                switchYear = 2005
                 # set start and end date for each year
                 for year in years_list:
                     env_template["csvViaHeaderOptions"]["start-date"] = year[0]
                     env_template["csvViaHeaderOptions"]["end-date"] = year[1]
-
+                    fyear = int(year[0][:4])
+                    if fyear < switchYear:
+                        env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
+                    elif fyear > switchYear:
+                        env_template["pathToClimateCSV"] = [backupClimateDataList[1]]
+                    else :
+                        env_template["pathToClimateCSV"] = backupClimateDataList
 
                     if not DEBUG_DONOT_SEND:
                         socket.send_json(env_template)
