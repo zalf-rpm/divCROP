@@ -256,9 +256,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
             # calculate the number of years between start and end date
             years = int(enddate[:4]) - int(startdate[:4]) + 1
             # create a list of years with start and end date for overlapping years
-            years_list = []
+            years_list_winter = []
             for i in range(years-1):
-                years_list.append((str(int(startdate[:4]) + i) + "-01-01" , str(int(startdate[:4]) + i+1) + "-12-31"))
+                years_list_winter.append((str(int(startdate[:4]) + i) + "-01-01" , str(int(startdate[:4]) + i+1) + "-12-31"))
+            # create a list of years with start and end date at the same year for summer crops
+            years_list_summer = []
+            for i in range(years):
+                years_list_summer.append((str(int(startdate[:4]) + i) + "-01-01" , str(int(startdate[:4]) + i) + "-12-31"))
             
 
         ## extract crop_id from crop-id name that has possible an extenstion
@@ -421,7 +425,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     soil_profile = soil_io3.soil_parameters(soil_db_con, soil_id)
                     soil_id_cache[soil_id] = soil_profile
 
+                has_winter_crop = False
                 for i, crop_id_s in crop_id_short.items():
+                    has_winter_crop = has_winter_crop or ilr_seed_harvest_data[crop_id_s]["is-winter-crop"]
 
                     worksteps = env_template["cropRotation" + (i if i == "2" else "")][0]["worksteps"]
                     sowing_ws = next(filter(lambda ws: ws["type"][-6:] == "Sowing", worksteps))
@@ -715,8 +721,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
 
                 # climate list 
                 backupClimateDataList = env_template["pathToClimateCSV"]
-                # hardcoded switch date for climate data 2005-01-01
-                switchYear = 2005
+                 # hardcoded switch date for climate data 2005-01-01
+                switchYear = 2005            
+                years_list = years_list_summer
+                # for summer crops
+                if has_winter_crop :
+                    years_list = years_list_winter
+
                 # set start and end date for each year
                 for year in years_list:
                     env_template["csvViaHeaderOptions"]["start-date"] = year[0]
@@ -726,8 +737,11 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
                     elif fyear > switchYear:
                         env_template["pathToClimateCSV"] = [backupClimateDataList[1]]
-                    else :
+                    elif has_winter_crop :
+                        # send both climate data for winter crops
                         env_template["pathToClimateCSV"] = backupClimateDataList
+                    else :
+                        env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
 
                     if not DEBUG_DONOT_SEND:
                         socket.send_json(env_template)
