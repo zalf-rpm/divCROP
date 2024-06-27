@@ -177,6 +177,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             file_.write(rowstr +  "\n")
 
     # iterate over all prepared data for a single row and write row
+    print("writing row:", row, "to grids ", len(output_grids) )
     for key, y2d_ in output_grids.items():
         y2d = y2d_["data"]
         cast_to = y2d_["cast-to"]
@@ -192,6 +193,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             path_to_file = path_to_output_dir + str(setup_id) + "_"+ crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
 
             if not os.path.isfile(path_to_file):
+                print("writing header to file:", path_to_file)
                 with open(path_to_file, "w") as _:
                     _.write(header)
                     write_row_to_grids.list_of_output_files[ic_id][setup_id].append(path_to_file)
