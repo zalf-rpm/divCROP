@@ -187,11 +187,12 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         else:
             mold = lambda x: str(round(x, digits))
 
+        print("number of y2d items", len(y2d) )
         for (cm_count, year), row_arr in y2d.items():
             crop = cmc_to_crop[cm_count] if cm_count in cmc_to_crop else "none"    
             crop = crop.replace("/", "").replace(" ", "")
             path_to_file = path_to_output_dir + str(setup_id) + "_"+ crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
-
+            print("filepath", path_to_file)
             if not os.path.isfile(path_to_file):
                 print("writing header to file:", path_to_file)
                 with open(path_to_file, "w") as _:
