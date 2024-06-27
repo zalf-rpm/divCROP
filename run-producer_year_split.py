@@ -255,15 +255,20 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
             enddate = str(setup["end_date"])
             # calculate the number of years between start and end date
             years = int(enddate[:4]) - int(startdate[:4]) + 1
+
             # create a list of years with start and end date for overlapping years
             years_list_winter = []
+            extended_setup_id_winter = []           
             for i in range(years-1):
                 years_list_winter.append((str(int(startdate[:4]) + i) + "-01-01" , str(int(startdate[:4]) + i+1) + "-12-31"))
+                extended_setup_id_winter.append(setup_id * 10000 + int(startdate[:4]) + i+1 )
             # create a list of years with start and end date at the same year for summer crops
+
             years_list_summer = []
+            extended_setup_id_summer = []
             for i in range(years):
                 years_list_summer.append((str(int(startdate[:4]) + i) + "-01-01" , str(int(startdate[:4]) + i) + "-12-31"))
-            
+                extended_setup_id_summer.append(setup_id * 10000 + int(startdate[:4]) + i)
 
         ## extract crop_id from crop-id name that has possible an extenstion
         crop_id_short = {"1": crop_id["1"].split('_')[0], "2": crop_id["2"].split('_')[0]}
@@ -401,9 +406,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         "nodata": True
                     }
                     if not DEBUG_DONOT_SEND:
-                        socket.send_json(env_template)
-                        # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
-                        sent_env_count += 1
+                        extended_setup_id = extended_setup_id_winter if has_winter_crop else extended_setup_id_summer
+                        for setup_id_ext in extended_setup_id:
+                            env_template["customId"]["setup_id"] = setup_id_ext
+                            socket.send_json(env_template)
+                        
+                            # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
+                            sent_env_count += 1
                     continue
 
                 tcoords = {}
@@ -579,9 +588,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         "nodata": True
                     }
                     if not DEBUG_DONOT_SEND:
-                        socket.send_json(env_template)
-                        # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
-                        sent_env_count += 1
+                        # send for each year in the setup
+                        extended_setup_id = extended_setup_id_winter if has_winter_crop else extended_setup_id_summer
+                        for setup_id_ext in extended_setup_id:
+                            env_template["customId"]["setup_id"] = setup_id_ext
+                            socket.send_json(env_template)
+                            # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
+                            sent_env_count += 1
                     continue
 
                 # check if current grid cell is used for agriculture                
@@ -727,12 +740,15 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 # for summer crops
                 if has_winter_crop :
                     years_list = years_list_winter
-
+                extended_setup_id = extended_setup_id_winter if has_winter_crop else extended_setup_id_summer
                 # set start and end date for each year
-                for year in years_list:
-                    env_template["csvViaHeaderOptions"]["start-date"] = year[0]
-                    env_template["csvViaHeaderOptions"]["end-date"] = year[1]
-                    fyear = int(year[0][:4])
+                for idx in range(len( years_list)):
+                    env_template["csvViaHeaderOptions"]["start-date"] = years_list[idx][0]
+                    env_template["csvViaHeaderOptions"]["end-date"] = years_list[idx][1]
+                    setup_id_ext = extended_setup_id[idx]
+                    
+                    env_template["customId"]["setup_id"] = setup_id_ext
+                    fyear = int(years_list[idx][0][:4])
                     if fyear < switchYear:
                         env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
                     elif fyear > switchYear:
@@ -746,8 +762,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     if not DEBUG_DONOT_SEND:
                         socket.send_json(env_template)
                         print("sent env ", sent_env_count, " customId: ", env_template["customId"])
-
-                    sent_env_count += 1
+                        sent_env_count += 1
 
                     # write debug output, as json file
                     if DEBUG_WRITE:

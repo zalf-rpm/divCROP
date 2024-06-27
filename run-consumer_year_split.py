@@ -189,7 +189,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         for (cm_count, year), row_arr in y2d.items():
             crop = cmc_to_crop[cm_count] if cm_count in cmc_to_crop else "none"    
             crop = crop.replace("/", "").replace(" ", "")
-            path_to_file = path_to_output_dir + crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
+            path_to_file = path_to_output_dir + str(setup_id) + "_"+ crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
 
             if not os.path.isfile(path_to_file):
                 with open(path_to_file, "w") as _:
@@ -370,9 +370,11 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
 
                 while (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0) \
                     or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][data["next-row"]] == 0):
-                    
-                    path_to_out_dir = config["out"] + str(setup_id) + "/"
-                    path_to_csv_out_dir = config["csv-out"] + str(setup_id) + "/"
+                    # split setup_id by "-" to get the real setup_id
+                    real_setup_id = int(setup_id / 10000)
+
+                    path_to_out_dir = config["out"] + str(real_setup_id) + "/"
+                    path_to_csv_out_dir = config["csv-out"] + str(real_setup_id) + "/"
                     print(path_to_out_dir)
                     if not data["out_dir_exists"]:
                         if os.path.isdir(path_to_out_dir) and os.path.exists(path_to_out_dir):
