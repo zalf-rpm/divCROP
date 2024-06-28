@@ -56,12 +56,13 @@ TEMPLATE_LANDUSE_PATH = "{local_path_to_data_dir}germany/landuse_1000_31469_gk5.
 USE_LANDUSE = False
 
 def create_output(msg):
+    # dump message to json string
+
     cm_count_to_vals = defaultdict(dict)
     for data in msg.get("data", []):
         results = data.get("results", [])
 
         is_daily_section = data.get("origSpec", "") == '"daily"'
-
         for vals in results:
             if "CM-count" in vals:
                 cm_count_to_vals[vals["CM-count"]].update(vals)
@@ -85,7 +86,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         write_row_to_grids.nodata_row_count = defaultdict(lambda: defaultdict(lambda: 0))
         write_row_to_grids.list_of_output_files = defaultdict(lambda: defaultdict(list))
 
-    make_dict_nparr = lambda: defaultdict(lambda: np.full((ncols,), -9999, dtype=np.float))
+    make_dict_nparr = lambda: defaultdict(lambda: np.full((ncols,), -9999, dtype=float))
     
     output_grids_ic = {
         "1": {
@@ -98,7 +99,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
             "OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception1": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             # define Gendrou as the median of transpiration deficit during generative phase
             # "sdoy": {"data" : make_dict_nparr(), "cast-to": "int"},
@@ -115,7 +116,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
             "OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception2": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
+            #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef|Gendrou": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
         }
     }
@@ -177,7 +178,6 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             file_.write(rowstr +  "\n")
 
     # iterate over all prepared data for a single row and write row
-    print("writing row:", row, "to grids ", len(output_grids) )
     for key, y2d_ in output_grids.items():
         y2d = y2d_["data"]
         cast_to = y2d_["cast-to"]
@@ -187,14 +187,11 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
         else:
             mold = lambda x: str(round(x, digits))
 
-        print("number of y2d items", len(y2d) )
         for (cm_count, year), row_arr in y2d.items():
             crop = cmc_to_crop[cm_count] if cm_count in cmc_to_crop else "none"    
             crop = crop.replace("/", "").replace(" ", "")
             path_to_file = path_to_output_dir + str(setup_id) + "_"+ crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
-            print("filepath", path_to_file)
             if not os.path.isfile(path_to_file):
-                print("writing header to file:", path_to_file)
                 with open(path_to_file, "w") as _:
                     _.write(header)
                     write_row_to_grids.list_of_output_files[ic_id][setup_id].append(path_to_file)
@@ -361,13 +358,25 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                 + " next row: " + str(data["next-row"]) \
                 + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) + " cells_per_row: " + str(datacells_per_row[row])#\
                 #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
-                print(debug_msg)
+                #print(debug_msg)
                 #debug_file.write(debug_msg + "\n")
+                if col in data["row-col-data"][row]:
+                    print("c: received data for cell that was already received! Skipping data!")
+                    continue
+
                 if is_nodata:
                     data["row-col-data"][row][col] = -9999
                 else:
-                    data["row-col-data"][row][col].append(create_output(msg))
+                    out = create_output(msg)
+                    if len(out) > 0:
+
+                        data["row-col-data"][row][col].append(out)
+                    else:
+                        data["row-col-data"][row][col] = -9999 
                 data["datacell-count"][row] -= 1
+                if data["datacell-count"][row] < 0:
+                    print("c: datacell-count < 0! Exiting!")
+                    exit(1)
 
                 process_message.received_env_count = process_message.received_env_count + 1
 
@@ -378,7 +387,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
 
                     path_to_out_dir = config["out"] + str(real_setup_id) + "/"
                     path_to_csv_out_dir = config["csv-out"] + str(real_setup_id) + "/"
-                    print(path_to_out_dir)
+      
                     if not data["out_dir_exists"]:
                         if os.path.isdir(path_to_out_dir) and os.path.exists(path_to_out_dir):
                             data["out_dir_exists"] = True
@@ -403,7 +412,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                         path_to_out_dir, path_to_csv_out_dir, setup_id, ic_id)
                     
                     debug_msg = "wrote row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
-                    print(debug_msg)
+                    #print(debug_msg)
                     #debug_file.write(debug_msg + "\n")
                     
                     data["next-row"] += 1 # move to next row (to be written)
@@ -417,7 +426,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
 
             for ic_id, msg in msg_.items(): 
 
-                print("received work result ", process_message.received_env_count, " customId: ", str(msg.get("customId", "")))
+               # print("received work result ", process_message.received_env_count, " customId: ", str(msg.get("customId", "")))
 
                 custom_id = msg["customId"]
                 setup_id = custom_id["setup_id"]
@@ -430,7 +439,6 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                 process_message.wnof_count += 1
 
                 path_to_out_dir = config["out"] + str(setup_id) + "/" + "ic-" + str(ic_id) + "/" + str(row) + "/"
-                print(path_to_out_dir)
                 if not os.path.exists(path_to_out_dir):
                     try:
                         os.makedirs(path_to_out_dir)

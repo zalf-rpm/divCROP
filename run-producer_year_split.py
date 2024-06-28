@@ -55,11 +55,11 @@ PATHS = {
         "path-debug-write-folder": "./debug-out/",
     },
     # adjust the local path to your environment
-    "sms-local-local": {
+    "sms-local-remote": {
         # "include-file-base-path": "/home/berg/GitHub/monica-parameters/", # path to monica-parameters
         "path-to-climate-dir": "./cluster/",
         # mounted path to archive or hard drive with climate data
-        "monica-path-to-climate-dir": "./cluster/",
+        "monica-path-to-climate-dir": "/monica_data/climate-data/",
         # /monica_data/climate-data/", # mounted path to archive accessable by monica executable
         "path-to-data-dir": "./data/",  # mounted path to archive or hard drive with data
         "path-debug-write-folder": "./debug-out/",
@@ -112,7 +112,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
     # config_and_no_data_socket = context.socket(zmq.PUSH)
 
     config = {
-        "mode": "sms-local-local",  ## local:"cj-local-remote" remote "mbm-local-remote"
+        "mode": "sms-local-remote",  ## local:"cj-local-remote" remote "mbm-local-remote"
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
         "start-row": "0",
@@ -122,7 +122,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "crop.json": "crop.json",
         "site.json": "site.json",
         "setups-file": "sim_setups.csv",
-        "run-setups": "[1]",
+        "run-setups": "[194]",
         "shared_id": shared_id
     }
 
@@ -748,21 +748,22 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     setup_id_ext = extended_setup_id[idx]
                     
                     env_template["customId"]["setup_id"] = setup_id_ext
-                    fyear = int(years_list[idx][0][:4])
-                    if fyear < switchYear:
-                        env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
-                    elif fyear > switchYear:
-                        env_template["pathToClimateCSV"] = [backupClimateDataList[1]]
-                    elif has_winter_crop :
-                        # send both climate data for winter crops
-                        env_template["pathToClimateCSV"] = backupClimateDataList
-                    else :
-                        env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
+                    if setup["incl_hist"]:
+                        fyear = int(years_list[idx][0][:4])
+                        if fyear < switchYear:
+                            env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
+                        elif fyear > switchYear:
+                            env_template["pathToClimateCSV"] = [backupClimateDataList[1]]
+                        elif has_winter_crop :
+                            # send both climate data for winter crops
+                            env_template["pathToClimateCSV"] = backupClimateDataList
+                        else :
+                            env_template["pathToClimateCSV"] = [backupClimateDataList[0]]
 
                     if not DEBUG_DONOT_SEND:
                         socket.send_json(env_template)
-                        print("sent env ", sent_env_count, " customId: ", env_template["customId"])
-                        sent_env_count += 1
+                        #print("sent env ", sent_env_count, " customId: ", env_template["customId"])
+                    sent_env_count += 1
 
                     # write debug output, as json file
                     if DEBUG_WRITE:
@@ -772,7 +773,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         if sent_env_count < DEBUG_ROWS:
 
                             path_to_debug_file = debug_write_folder + "/row_" + str(sent_env_count - 1) + "_" + str(
-                                setup_id) + ".json"
+                                setup_id_ext) + ".json"
 
                             if not os.path.isfile(path_to_debug_file):
                                 with open(path_to_debug_file, "w") as _:
