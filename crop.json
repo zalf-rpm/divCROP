@@ -146,8 +146,13 @@
 		"WW_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
+					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
 				},
+				{ "type": "SetValue",
+				  "days": 1,
+				  "after": "Sowing",
+				  "var": ["Mois", [1,20]],
+				  "value": ["Fc", [1,20]] },
 				{
 					"type": "NDemandFertilization",
 					"days": 60,
@@ -176,14 +181,6 @@
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-09-05",
 					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
 				}
 			]
 		}],
@@ -494,11 +491,16 @@
 		"Soy_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0001-05-06", "type": "Sowing", "crop": ["ref", "crops", "Soy"]
+					"date": "0000-05-06", "type": "Sowing", "crop": ["ref", "crops", "Soy"]
 				},
+				{ "type": "SetValue",
+				  "days": 1,
+				  "after": "Sowing",
+				  "var": ["Mois", [1,20]],
+				  "value": ["Fc", [1,20]] },
 				{
 					"type": "AutomaticHarvest",
-					"latest-date": "0001-10-31",
+					"latest-date": "0000-10-31",
 					"harvest-time": "maturity"
 				}
 			]
@@ -513,11 +515,33 @@
 		"__enable_vernalisation_factor_fix__": true,
 		"intercropping": {
 			"is_intercropping": false,
-			"k_s": [0.612, "", "smaller crop canopy extinction coefficient"],
-			"k_t": [0.681, "", "taller crop canopy extinction coefficient"],
-			"PHredux": [0.5, "", "plant height reduction factor at dev stage"],
-			"DVS_PHr":[5.791262, "", "a variable derived from the field experiment for automatic PHredux calculation"],
-			"auto_PHredux": [false, "","calculating the PHredux automatically according to the equation or use fixed PHredux above"]
+			"sequential_water_use": true,
+			"two_way_sync": true,
+			"k_s": [
+			  0.612,
+			  "",
+			  "smaller crop canopy extinction coefficient"
+			],
+			"k_t": [
+			  0.681,
+			  "",
+			  "taller crop canopy extinction coefficient"
+			],
+			"PHredux": [
+			  0.5,
+			  "",
+			  "plant height reduction factor at dev stage"
+			],
+			"DVS_PHr": [
+			  5.791262,
+			  "",
+			  "a variable derived from the field experiment for automatic PHredux calculation"
+			],
+			"auto_PHredux": [
+			  true,
+			  "",
+			  "calculating the PHredux automatically according to the equation or use fixed PHredux above"
+			]
 		}
 	}
 }

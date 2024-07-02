@@ -87,8 +87,13 @@
 		"WW_sfix_hauto": [{
 			"worksteps": [
 				{
-					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
+					"date": "0000-09-09", "type": "Sowing", "crop": ["ref", "crops", "WW_RGT"] 
 				},
+				{ "type": "SetValue",
+				  "days": 1,
+				  "after": "Sowing",
+				  "var": ["Mois", [1,20]],
+				  "value": ["Fc", [1,20]] },
 				{
 					"type": "NDemandFertilization",
 					"days": 60,
@@ -117,62 +122,6 @@
 					"type": "AutomaticHarvest", 
 					"latest-date": "0001-09-05",
 					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
-				}
-			]
-		}],
-		"WM_sfix_hauto": [{
-			"worksteps": [
-				{
-					"date": "0000-11-18", "type": "Sowing", "crop": ["ref", "crops", "WW_Mo"] 
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 60,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.3, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 120,
-					"after": "Sowing",
-					"N-demand": [80.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{
-					"type": "NDemandFertilization",
-					"days": 150,
-					"after": "Sowing",
-					"N-demand": [40.0, "kg"],
-					"depth": [0.9, "m"],
-					"partition": ["include-from-file", "mineral-fertilisers/AN.json"]
-				},
-				{ 
-					"type": "AutomaticHarvest", 
-					"latest-date": "0001-09-05",
-					"min-%-asw": 0,
-					"max-%-asw": 99.0,
-					"max-3d-precip-sum": 2,
-					"max-curr-day-precip": 0.1,
-					"harvest-time": "maturity"
-				},
-				{
-					"type": "OrganicFertilization",
-					"days": 1,
-					"after": "Harvest",
-					"amount": [15000, "kg N"],
-					"parameters": ["include-from-file", "organic-fertilisers/CAM.json"],
-					"incorporation": true
 				}
 			]
 		}],
@@ -181,6 +130,11 @@
 				{
 					"date": "0001-05-06", "type": "Sowing", "crop": ["ref", "crops", "Soy"]
 				},
+				{ "type": "SetValue",
+				  "days": 1,
+				  "after": "Sowing",
+				  "var": ["Mois", [1,20]],
+				  "value": ["Fc", [1,20]] },
 				{
 					"type": "AutomaticHarvest",
 					"latest-date": "0001-10-31",
@@ -221,7 +175,7 @@
 			  "a variable derived from the field experiment for automatic PHredux calculation"
 			],
 			"auto_PHredux": [
-			  false,
+			  true,
 			  "",
 			  "calculating the PHredux automatically according to the equation or use fixed PHredux above"
 			]
