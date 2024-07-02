@@ -341,9 +341,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 break
 
             for scol in range(0, scols):
-                #soil_id = int(soil_grid[srow, scol])
-                #if soil_id == nodata_value:
-                #    continue
+                soil_id = int(soil_grid[srow, scol])
+                if soil_id == nodata_value:
+                    continue
 
                 # get coordinate of clostest climate element of real soil-cell
                 sh = yllcorner + (scellsize / 2) + (srows - srow - 1) * scellsize
