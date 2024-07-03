@@ -78,11 +78,11 @@ def create_output(msg):
     return cm_count_to_vals
 
 
-def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, path_to_csv_output_dir, setup_id,
+def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, setup_id,
                        ic_id="1"):
-    "write grids row by row"
+    """"write grids row by row"""
 
-    if not hasattr(write_row_to_grids, "ic"):
+    if not hasattr(write_row_to_grids, "nodata_row_count"):
         write_row_to_grids.nodata_row_count = defaultdict(lambda: defaultdict(lambda: 0))
         write_row_to_grids.list_of_output_files = defaultdict(lambda: defaultdict(list))
 
@@ -211,9 +211,9 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
     # if we're at the end of the output and just empty lines are left, then they won't be written in the
     # above manner because there won't be any rows with data where they could be written before
     # so add no-data rows simply to all files we've written to before
-    if is_no_data_row \
-            and write_row_to_grids.list_of_output_files[ic_id][setup_id] \
-            and write_row_to_grids.nodata_row_count[ic_id][setup_id] > 0:
+    if (is_no_data_row and
+            write_row_to_grids.list_of_output_files[ic_id][setup_id] and
+            write_row_to_grids.nodata_row_count[ic_id][setup_id] > 0):
         for path_to_file in write_row_to_grids.list_of_output_files[ic_id][setup_id]:
             with open(path_to_file, "a") as file_:
                 write_nodata_rows(file_)
@@ -224,7 +224,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
 
 
 def run_consumer(leave_after_finished_run=True, server={"server": None, "port": None}, shared_id=None):
-    "collect data from workers"
+    """collect data from workers"""
 
     config = {
         "mode": "mbm-local-remote",  ## remote "mbm-local-remote", local "cj-local-remote"
@@ -277,13 +277,13 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
     nodata_value = int(soil_metadata["nodata_value"])
     start_row = int(config["start-row"])
     end_row = int(config["end-row"])
+    end_row = s_rows - 1 if end_row < 0 else end_row
 
-    if end_row >= 0:
-        number_of_rows = end_row - start_row + 1
-        header_lines = header.split("\n")
-        header_lines[1] = f"nrows        {number_of_rows}"
-        header_lines[3] = f"yllcorner    {yll_corner + ((s_rows - (end_row + 1)) * s_cell_size)}"
-        header = "\n".join(header_lines)
+    number_of_rows = end_row - start_row + 1
+    header_lines = header.split("\n")
+    header_lines[1] = f"nrows        {number_of_rows}"
+    header_lines[3] = f"yllcorner    {yll_corner + ((s_rows - (end_row + 1)) * s_cell_size)}"
+    header = "\n".join(header_lines)
 
     if USE_LANDUSE:
         path_to_landuse_grid = TEMPLATE_LANDUSE_PATH.format(local_path_to_data_dir=paths["path-to-data-dir"])
@@ -373,9 +373,9 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
 
                 process_message.received_env_count = process_message.received_env_count + 1
 
-                while (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0) \
-                        or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][
-                    data["next-row"]] == 0):
+                while ((data["next-row"] in data["row-col-data"] or
+                        len(data["datacell-count"]) > data["next-row"]) and
+                       data["datacell-count"][data["next-row"]] == 0):
 
                     path_to_out_dir = config["out"] + str(setup_id) + "/"
                     path_to_csv_out_dir = config["csv-out"] + str(setup_id) + "/"
@@ -401,7 +401,7 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
                                 exit(1)
 
                     write_row_to_grids(data["row-col-data"], data["next-row"], data["ncols"], data["header"], \
-                                       path_to_out_dir, path_to_csv_out_dir, setup_id, ic_id)
+                                       path_to_out_dir, setup_id, ic_id)
 
                     debug_msg = "wrote row: " + str(data["next-row"]) + " next-row: " + str(
                         data["next-row"] + 1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
