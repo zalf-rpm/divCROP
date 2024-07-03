@@ -105,8 +105,8 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "mode": "mbm-local-remote",  ## local:"cj-local-remote" remote "mbm-local-remote"
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
-        "start-row": "59",
-        "end-row": "77",
+        "start-row": "0", #"59",
+        "end-row": "-1", #"77",
         "path_to_dem_grid": "",
         "sim.json": "sim.json",
         "crop.json": "crop.json",
@@ -672,7 +672,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         dict(repl_map, scenario="historical"))
                     env_template["pathToClimateCSV"].insert(0,
                                                             paths["monica-path-to-climate-dir"] + hist_subpath_to_csv)
-                print("pathToClimateCSV:", env_template["pathToClimateCSV"])
+                #print("pathToClimateCSV:", env_template["pathToClimateCSV"])
                 if DEBUG_WRITE_CLIMATE:
                     listOfClimateFiles.add(subpath_to_csv)
 
@@ -685,14 +685,14 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                     "nodata": False
                 }
 
-                print("Harvest type:", setup["harvest-date"])
-                print("Srow: ", env_template["customId"]["srow"], "Scol:", env_template["customId"]["scol"])
-                harvest_ws = next(
-                    filter(lambda ws: ws["type"][-7:] == "Harvest", env_template["cropRotation"][0]["worksteps"]))
-                if setup["harvest-date"] == "fixed":
-                    print("Harvest-date:", harvest_ws["date"])
-                elif setup["harvest-date"] == "auto":
-                    print("Harvest-date:", harvest_ws["latest-date"])
+                #print("Harvest type:", setup["harvest-date"])
+                #print("Srow: ", env_template["customId"]["srow"], "Scol:", env_template["customId"]["scol"])
+                #harvest_ws = next(
+                #    filter(lambda ws: ws["type"][-7:] == "Harvest", env_template["cropRotation"][0]["worksteps"]))
+                #if setup["harvest-date"] == "fixed":
+                #    print("Harvest-date:", harvest_ws["date"])
+                #elif setup["harvest-date"] == "auto":
+                #    print("Harvest-date:", harvest_ws["latest-date"])
 
                 if not DEBUG_DONOT_SEND:
                     socket.send_json(env_template)

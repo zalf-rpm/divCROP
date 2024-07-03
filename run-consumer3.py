@@ -344,7 +344,6 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
 
         if not hasattr(process_message, "wnof_count"):
             process_message.wnof_count = 0
-            process_message.setup_count = 0
 
         leave = False
 
@@ -359,18 +358,13 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
 
                 row = custom_id["srow"]
                 col = custom_id["scol"]
-                #crow = custom_id.get("crow", -1)
-                #ccol = custom_id.get("ccol", -1)
-                #soil_id = custom_id.get("soil_id", -1)
 
                 debug_msg = "received work result " + str(process_message.received_env_count) + " customId: " + str(
                     msg.get("customId", "")) \
                             + " next row: " + str(data["next-row"]) \
                             + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(
-                    row) + " cells_per_row: " + str(datacells_per_row[row])  #\
-                #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
+                    row) + " cells_per_row: " + str(datacells_per_row[row])
                 print(debug_msg)
-                #debug_file.write(debug_msg + "\n")
                 if is_nodata:
                     data["row-col-data"][row][col] = -9999
                 else:
@@ -412,14 +406,8 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
                     debug_msg = "wrote row: " + str(data["next-row"]) + " next-row: " + str(
                         data["next-row"] + 1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
                     print(debug_msg)
-                    #debug_file.write(debug_msg + "\n")
 
                     data["next-row"] += 1  # move to next row (to be written)
-
-                    if leave_after_finished_run \
-                            and ((data["end_row"] < 0 and data["next-row"] > data["nrows"] - 1)
-                                 or (0 <= data["end_row"] < data["next-row"])):
-                        process_message.setup_count += 1
 
         elif write_normal_output_files:
 
@@ -477,23 +465,15 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
 
     while not leave:
         try:
-            #start_time_recv = timeit.default_timer()
             msg = socket.recv_json()  #encoding="latin-1"
-            #elapsed = timeit.default_timer() - start_time_recv
-            #print("time to receive message" + str(elapsed))
-            #start_time_proc = timeit.default_timer()
             leave = process_message(msg)
-            #elapsed = timeit.default_timer() - start_time_proc
-            #print("time to process message" + str(elapsed))
         except zmq.error.Again as _e:
             print('no response from the server (with "timeout"=%d ms) ' % socket.RCVTIMEO)
             return
         except Exception as e:
             print("Exception:", e)
-            #continue
 
     print("exiting run_consumer()")
-    #debug_file.close()
 
 
 if __name__ == "__main__":
