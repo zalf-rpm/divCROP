@@ -105,8 +105,8 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "mode": "mbm-local-remote",  ## local:"cj-local-remote" remote "mbm-local-remote"
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
-        "start-row": "0", #"59",
-        "end-row": "-1", #"77",
+        "start-row": "59",
+        "end-row": "77",
         "path_to_dem_grid": "",
         "sim.json": "sim.json",
         "crop.json": "crop.json",
@@ -337,7 +337,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
 
             if srow < int(config["start-row"]):
                 continue
-            elif int(config["end-row"]) > 0 and srow > int(config["end-row"]):
+            elif 0 < int(config["end-row"]) < srow:
                 break
 
             for scol in range(0, scols):

@@ -55,6 +55,7 @@ TEMPLATE_LANDUSE_PATH = "{local_path_to_data_dir}germany/landuse_1000_31469_gk5.
 #DATA_SOIL_DB = "germany/buek200.sqlite"
 USE_LANDUSE = False
 
+
 def create_output(msg):
     cm_count_to_vals = defaultdict(dict)
     for data in msg.get("data", []):
@@ -77,25 +78,26 @@ def create_output(msg):
     return cm_count_to_vals
 
 
-def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, path_to_csv_output_dir, setup_id, ic_id = "1"):
+def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, path_to_csv_output_dir, setup_id,
+                       ic_id="1"):
     "write grids row by row"
-    
+
     if not hasattr(write_row_to_grids, "ic"):
         write_row_to_grids.nodata_row_count = defaultdict(lambda: defaultdict(lambda: 0))
         write_row_to_grids.list_of_output_files = defaultdict(lambda: defaultdict(list))
 
     make_dict_nparr = lambda: defaultdict(lambda: np.full((ncols,), -9999, dtype=np.float))
-    
+
     output_grids_ic = {
         "1": {
-            "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "Yield": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "AbBiom": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
             #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "SowDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
-            "NLeach": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "AntDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
-            "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
+            "SowDOY": {"data": make_dict_nparr(), "cast-to": "int"},
+            "NLeach": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "AntDOY": {"data": make_dict_nparr(), "cast-to": "int"},
+            "HarDOY": {"data": make_dict_nparr(), "cast-to": "int"},
             #"OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception1": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
@@ -107,13 +109,13 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             #"ssm69": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 4},
         },
         "2": {
-            "Yield": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "AbBiom": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
-            "NLeach": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "Yield": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "AbBiom": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
+            "NLeach": {"data": make_dict_nparr(), "cast-to": "float", "digits": 1},
             #"NDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"TraDef": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
-            "AntDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
-            "HarDOY": {"data" : make_dict_nparr(), "cast-to": "int"},
+            "AntDOY": {"data": make_dict_nparr(), "cast-to": "int"},
+            "HarDOY": {"data": make_dict_nparr(), "cast-to": "int"},
             #"OxRed": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"LightInterception2": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
             #"Mois|SoilAvW": {"data" : make_dict_nparr(), "cast-to": "float", "digits": 2},
@@ -150,7 +152,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
                                     v = data[key]
                                     if isinstance(v, list):
                                         for i, v_ in enumerate(v):
-                                            cmc_and_year_to_vals[(cm_count, data["Year"])][f'{key}_{i+1}'].append(v_)
+                                            cmc_and_year_to_vals[(cm_count, data["Year"])][f'{key}_{i + 1}'].append(v_)
                                     else:
                                         cmc_and_year_to_vals[(cm_count, data["Year"])][key].append(v)
                                 # if a key is missing, because that monica event was never raised/reached, create the empty list
@@ -175,7 +177,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
     def write_nodata_rows(file_):
         for _ in range(write_row_to_grids.nodata_row_count[ic_id][setup_id]):
             rowstr = " ".join(["-9999" for __ in range(ncols)])
-            file_.write(rowstr +  "\n")
+            file_.write(rowstr + "\n")
 
     # iterate over all prepared data for a single row and write row
     for key, y2d_ in output_grids.items():
@@ -188,7 +190,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             mold = lambda x: str(round(x, digits))
 
         for (cm_count, year), row_arr in y2d.items():
-            crop = cmc_to_crop[cm_count] if cm_count in cmc_to_crop else "none"    
+            crop = cmc_to_crop[cm_count] if cm_count in cmc_to_crop else "none"
             crop = crop.replace("/", "").replace(" ", "")
             path_to_file = path_to_output_dir + crop + "_" + key + "_" + str(year) + "_" + str(cm_count) + ".asc"
 
@@ -200,7 +202,7 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
             with open(path_to_file, "a") as file_:
                 write_nodata_rows(file_)
                 rowstr = " ".join(["-9999" if int(x) == -9999 else mold(x) for x in row_arr])
-                file_.write(rowstr +  "\n")
+                file_.write(rowstr + "\n")
 
     # clear the no-data row count when no-data rows have been written before a data row
     if not is_no_data_row:
@@ -210,33 +212,33 @@ def write_row_to_grids(row_col_data, row, ncols, header, path_to_output_dir, pat
     # above manner because there won't be any rows with data where they could be written before
     # so add no-data rows simply to all files we've written to before
     if is_no_data_row \
-        and write_row_to_grids.list_of_output_files[ic_id][setup_id] \
-        and write_row_to_grids.nodata_row_count[ic_id][setup_id] > 0:
+            and write_row_to_grids.list_of_output_files[ic_id][setup_id] \
+            and write_row_to_grids.nodata_row_count[ic_id][setup_id] > 0:
         for path_to_file in write_row_to_grids.list_of_output_files[ic_id][setup_id]:
             with open(path_to_file, "a") as file_:
                 write_nodata_rows(file_)
         write_row_to_grids.nodata_row_count[ic_id][setup_id] = 0
-    
+
     if row in row_col_data:
         del row_col_data[row]
 
 
-def run_consumer(leave_after_finished_run = True, server = {"server": None, "port": None}, shared_id = None):
+def run_consumer(leave_after_finished_run=True, server={"server": None, "port": None}, shared_id=None):
     "collect data from workers"
 
     config = {
         "mode": "mbm-local-remote",  ## remote "mbm-local-remote", local "cj-local-remote"
-        "port": server["port"] if server["port"] else "7777", ## local 7778,  remote 7777
-        "server": server["server"] if server["server"] else "login01.cluster.zalf.de", 
-        "start-row": "0", #"59",
-        "end-row": "-1", #"77",
+        "port": server["port"] if server["port"] else "7777",  ## local 7778,  remote 7777
+        "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
+        "start-row": "59",
+        "end-row": "77",
         "shared_id": shared_id,
-        "timeout": 600000 # 10 minutes
+        "timeout": 600000  # 10 minutes
     }
 
     if len(sys.argv) > 1 and __name__ == "__main__":
         for arg in sys.argv[1:]:
-            k,v = arg.split("=")
+            k, v = arg.split("=")
             if k in config:
                 config[k] = v
 
@@ -267,12 +269,21 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     soil_metadata, header = Mrunlib.read_header(path_to_soil_grid)
     soil_grid_template = np.loadtxt(path_to_soil_grid, dtype=int, skiprows=6)
 
-    scols = int(soil_metadata["ncols"])
-    srows = int(soil_metadata["nrows"])
-    scellsize = int(soil_metadata["cellsize"])
-    xllcorner = int(soil_metadata["xllcorner"])
-    yllcorner = int(soil_metadata["yllcorner"])
+    s_cols = int(soil_metadata["ncols"])
+    s_rows = int(soil_metadata["nrows"])
+    s_cell_size = int(soil_metadata["cellsize"])
+    xll_corner = float(soil_metadata["xllcorner"])
+    yll_corner = float(soil_metadata["yllcorner"])
     nodata_value = int(soil_metadata["nodata_value"])
+    start_row = int(config["start-row"])
+    end_row = int(config["end-row"])
+
+    if end_row >= 0:
+        number_of_rows = end_row - start_row + 1
+        header_lines = header.split("\n")
+        header_lines[1] = f"nrows        {number_of_rows}"
+        header_lines[3] = f"yllcorner    {yll_corner + ((s_rows - (end_row + 1)) * s_cell_size)}"
+        header = "\n".join(header_lines)
 
     if USE_LANDUSE:
         path_to_landuse_grid = TEMPLATE_LANDUSE_PATH.format(local_path_to_data_dir=paths["path-to-data-dir"])
@@ -283,21 +294,21 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
         landuse_grid = np.loadtxt(path_to_landuse_grid, dtype=int, skiprows=6)
         landuse_interpolate = Mrunlib.create_ascii_grid_interpolator(landuse_grid, landuse_meta)
 
-        for srow in range(0, srows):
+        for srow in range(0, s_rows):
             #print(srow)
-            for scol in range(0, scols):
+            for scol in range(0, s_cols):
                 soil_id = soil_grid_template[srow, scol]
                 if soil_id == -9999:
                     continue
 
                 #get coordinate of clostest climate element of real soil-cell
-                sh = yllcorner + (scellsize / 2) + (srows - srow - 1) * scellsize
-                sr = xllcorner + (scellsize / 2) + scol * scellsize
+                sh = yll_corner + (s_cell_size / 2) + (s_rows - srow - 1) * s_cell_size
+                sr = xll_corner + (s_cell_size / 2) + scol * s_cell_size
 
                 # check if current grid cell is used for agriculture                
                 lur, luh = landuse_transformer(sh, sr)
                 landuse_id = landuse_interpolate(lur, luh)
-                if landuse_id not in [2,3,4]:
+                if landuse_id not in [2, 3, 4]:
                     soil_grid_template[srow, scol] = -9999
 
         print("filtered through CORINE")
@@ -310,14 +321,11 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     #count cols in rows
     datacells_per_row = np.sum(soil_grid_template, axis=1)
 
-    start_row = int(config["start-row"])
-    end_row = int(config["end-row"])
-    ncols = int(soil_metadata["ncols"])
     setup_id_to_ic_id_to_data = defaultdict(lambda: defaultdict(lambda: {
         "start_row": start_row,
         "end_row": end_row,
-        "nrows": end_row - start_row + 1 if start_row > 0 and end_row >= start_row else int(soil_metadata["nrows"]),
-        "ncols": ncols,
+        "nrows": number_of_rows if 0 < start_row <= end_row else s_rows,
+        "ncols": s_cols,
         "header": header,
         "out_dir_exists": False,
         "row-col-data": defaultdict(lambda: defaultdict(list)),
@@ -328,7 +336,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     def process_message(msg_):
 
         if not ("1" in msg_ or "2" in msg_):
-                msg_ = {"1": msg_}
+            msg_ = {"1": msg_}
 
         if len(msg_["1"]["errors"]) > 0:
             print("There were errors in message:", msg_["1"], "\nSkipping message!")
@@ -342,7 +350,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
 
         if not write_normal_output_files:
 
-            for ic_id, msg in msg_.items(): 
+            for ic_id, msg in msg_.items():
                 custom_id = msg["customId"]
                 setup_id = custom_id["setup_id"]
                 is_nodata = custom_id["nodata"]
@@ -355,9 +363,11 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                 #ccol = custom_id.get("ccol", -1)
                 #soil_id = custom_id.get("soil_id", -1)
 
-                debug_msg = "received work result " + str(process_message.received_env_count) + " customId: " + str(msg.get("customId", "")) \
-                + " next row: " + str(data["next-row"]) \
-                + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(row) + " cells_per_row: " + str(datacells_per_row[row])#\
+                debug_msg = "received work result " + str(process_message.received_env_count) + " customId: " + str(
+                    msg.get("customId", "")) \
+                            + " next row: " + str(data["next-row"]) \
+                            + " cols@row to go: " + str(data["datacell-count"][row]) + "@" + str(
+                    row) + " cells_per_row: " + str(datacells_per_row[row])  #\
                 #+ " rows unwritten: " + str(data["row-col-data"].keys()) 
                 print(debug_msg)
                 #debug_file.write(debug_msg + "\n")
@@ -370,8 +380,9 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                 process_message.received_env_count = process_message.received_env_count + 1
 
                 while (data["next-row"] in data["row-col-data"] and data["datacell-count"][data["next-row"]] == 0) \
-                    or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][data["next-row"]] == 0):
-                    
+                        or (len(data["datacell-count"]) > data["next-row"] and data["datacell-count"][
+                    data["next-row"]] == 0):
+
                     path_to_out_dir = config["out"] + str(setup_id) + "/"
                     path_to_csv_out_dir = config["csv-out"] + str(setup_id) + "/"
                     print(path_to_out_dir)
@@ -394,26 +405,28 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                             except OSError:
                                 print("c: Couldn't create dir:", path_to_csv_out_dir, "! Exiting.")
                                 exit(1)
-                    
+
                     write_row_to_grids(data["row-col-data"], data["next-row"], data["ncols"], data["header"], \
-                        path_to_out_dir, path_to_csv_out_dir, setup_id, ic_id)
-                    
-                    debug_msg = "wrote row: "  + str(data["next-row"]) + " next-row: " + str(data["next-row"]+1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
+                                       path_to_out_dir, path_to_csv_out_dir, setup_id, ic_id)
+
+                    debug_msg = "wrote row: " + str(data["next-row"]) + " next-row: " + str(
+                        data["next-row"] + 1) + " rows unwritten: " + str(list(data["row-col-data"].keys()))
                     print(debug_msg)
                     #debug_file.write(debug_msg + "\n")
-                    
-                    data["next-row"] += 1 # move to next row (to be written)
+
+                    data["next-row"] += 1  # move to next row (to be written)
 
                     if leave_after_finished_run \
-                    and ((data["end_row"] < 0 and data["next-row"] > data["nrows"]-1) \
-                        or (data["end_row"] >= 0 and data["next-row"] > data["end_row"])): 
+                            and ((data["end_row"] < 0 and data["next-row"] > data["nrows"] - 1)
+                                 or (0 <= data["end_row"] < data["next-row"])):
                         process_message.setup_count += 1
-                        
+
         elif write_normal_output_files:
 
-            for ic_id, msg in msg_.items(): 
+            for ic_id, msg in msg_.items():
 
-                print("received work result ", process_message.received_env_count, " customId: ", str(msg.get("customId", "")))
+                print("received work result ", process_message.received_env_count, " customId: ",
+                      str(msg.get("customId", "")))
 
                 custom_id = msg["customId"]
                 setup_id = custom_id["setup_id"]
@@ -422,7 +435,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                 #crow = custom_id.get("crow", -1)
                 #ccol = custom_id.get("ccol", -1)
                 #soil_id = custom_id.get("soil_id", -1)
-                
+
                 process_message.wnof_count += 1
 
                 path_to_out_dir = config["out"] + str(setup_id) + "/" + "ic-" + str(ic_id) + "/" + str(row) + "/"
@@ -446,9 +459,9 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
                         if len(results) > 0:
                             writer.writerow([orig_spec.replace("\"", "")])
                             for row in monica_io3.write_output_header_rows(output_ids,
-                                                                        include_header_row=True,
-                                                                        include_units_row=True,
-                                                                        include_time_agg=False):
+                                                                           include_header_row=True,
+                                                                           include_units_row=True,
+                                                                           include_time_agg=False):
                                 writer.writerow(row)
 
                             for row in monica_io3.write_output_obj(output_ids, results):
@@ -465,7 +478,7 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     while not leave:
         try:
             #start_time_recv = timeit.default_timer()
-            msg = socket.recv_json() #encoding="latin-1"
+            msg = socket.recv_json()  #encoding="latin-1"
             #elapsed = timeit.default_timer() - start_time_recv
             #print("time to receive message" + str(elapsed))
             #start_time_proc = timeit.default_timer()
@@ -482,7 +495,6 @@ def run_consumer(leave_after_finished_run = True, server = {"server": None, "por
     print("exiting run_consumer()")
     #debug_file.close()
 
+
 if __name__ == "__main__":
     run_consumer()
-
-
