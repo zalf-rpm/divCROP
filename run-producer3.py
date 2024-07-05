@@ -105,13 +105,13 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "mode": "mbm-local-remote",  ## local:"cj-local-remote" remote "mbm-local-remote"
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
-        "start-row": "0", #"59",
-        "end-row": "-1", #"77",
+        "start-row": "59",
+        "end-row": "77",
         "path_to_dem_grid": "",
         "sim.json": "sim.json",
         "crop.json": "crop.json",
         "site.json": "site.json",
-        "setups-file": "sim_setups.csv",
+        "setups-file": "sim_setups3.csv",
         "run-setups": "[1]",
         "shared_id": shared_id
     }
@@ -341,9 +341,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                 break
 
             for scol in range(0, scols):
-                soil_id = int(soil_grid[srow, scol])
-                if soil_id == nodata_value:
-                    continue
+                #soil_id = int(soil_grid[srow, scol])
+                #if soil_id == nodata_value:
+                #    continue
 
                 # get coordinate of clostest climate element of real soil-cell
                 sh = yllcorner + (scellsize / 2) + (srows - srow - 1) * scellsize
@@ -377,8 +377,8 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
                         "nodata": True
                     }
                     if not DEBUG_DONOT_SEND:
-                        socket.send_json(env_template)
-                        # print("sent nodata env ", sent_env_count, " customId: ", env_template["customId"])
+                        #socket.send_json(env_template)
+                        #print("sent crop_grid nodata env ", sent_env_count, " customId: ", env_template["customId"])
                         sent_env_count += 1
                     continue
 

@@ -50,7 +50,8 @@ PATHS = {
         "path-to-csv-output-dir": "/out/csv-out/"
     }
 }
-TEMPLATE_SOIL_PATH = "{local_path_to_data_dir}germany/buek200_1000_25832_etrs89-utm32n.asc"
+#TEMPLATE_SOIL_PATH = "{local_path_to_data_dir}germany/buek200_1000_25832_etrs89-utm32n.asc"
+TEMPLATE_SOIL_PATH = "{local_path_to_data_dir}germany/germany-complete_1000_25832_etrs89-utm32n.asc"
 TEMPLATE_LANDUSE_PATH = "{local_path_to_data_dir}germany/landuse_1000_31469_gk5.asc"
 #DATA_SOIL_DB = "germany/buek200.sqlite"
 USE_LANDUSE = False
@@ -230,8 +231,8 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
         "mode": "mbm-local-remote",  ## remote "mbm-local-remote", local "cj-local-remote"
         "port": server["port"] if server["port"] else "7777",  ## local 7778,  remote 7777
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
-        "start-row": "0", #"59",
-        "end-row": "-1", #"77",
+        "start-row": "59",
+        "end-row": "77",
         "shared_id": shared_id,
         "timeout": 600000  # 10 minutes
     }
@@ -314,12 +315,13 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
         print("filtered through CORINE")
 
     #set all data values to one, to count them later
-    soil_grid_template[soil_grid_template != nodata_value] = 1
+    #soil_grid_template[soil_grid_template != nodata_value] = 1
     #set all no-data values to 0, to ignore them while counting
     soil_grid_template[soil_grid_template == nodata_value] = 0
 
     #count cols in rows
     datacells_per_row = np.sum(soil_grid_template, axis=1)
+    #datacells_per_row = np.full((866,), 641, dtype=int)
 
     setup_id_to_ic_id_to_data = defaultdict(lambda: defaultdict(lambda: {
         "start_row": start_row,
