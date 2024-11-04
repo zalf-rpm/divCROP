@@ -13,7 +13,7 @@
 			"is-winter-crop": true,
 			"cropParams": {
 				"species": ["include-from-file", "crops/species/barley.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-barley_bs_dwd_pheno.json"]
+				"cultivar": ["include-from-file", "crops/cultivars/winter-barley.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/barley.json"]
 		},
@@ -21,7 +21,7 @@
 			"is-winter-crop": true,
 			"cropParams": {
 				"species": ["include-from-file", "crops/species/rye.json"],
-				"cultivar": ["include-from-file", "crops/cultivars/winter-rye_hhf_dwd_pheno.json"]
+				"cultivar": ["include-from-file", "crops/cultivars/winter-rye_hhf_Borellus.json"]
 			},
 			"residueParams": ["include-from-file", "crops/residues/rye.json"]
 		},
