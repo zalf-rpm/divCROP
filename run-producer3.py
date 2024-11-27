@@ -316,9 +316,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
             "climate": ""
         })
 
-        for i in range(0, 3):
-            env_template["cropRotation"].append(copy.deepcopy(env_template["cropRotation"][0]))
-            env_template["cropRotation"].pop(0)
+        #for i in range(0, 0):
+         #   env_template["cropRotation"].append(copy.deepcopy(env_template["cropRotation"][0]))
+          #  env_template["cropRotation"].pop(0)
 
         # set shared id in template
         if config["shared_id"]:
