@@ -105,8 +105,8 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "mode": "mbm-local-remote",  ## local:"cj-local-remote" remote "mbm-local-remote"
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
-        "start-row": "59",
-        "end-row": "77",
+        "start-row": "533",
+        "end-row": "634",
         "path_to_dem_grid": "",
         "sim.json": "sim.json",
         "crop.json": "crop.json",
