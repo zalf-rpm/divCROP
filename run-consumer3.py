@@ -232,7 +232,7 @@ def run_consumer(leave_after_finished_run=True, server={"server": None, "port": 
         "port": server["port"] if server["port"] else "7777",  ## local 7778,  remote 7777
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
         "start-row": "230",
-        "end-row": "330",
+        "end-row": "336",
         "shared_id": shared_id,
         "timeout": 600000  # 10 minutes
     }

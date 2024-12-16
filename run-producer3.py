@@ -106,7 +106,7 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
         "server-port": server["port"] if server["port"] else "6666",  ## local: 6667, remote 6666
         "server": server["server"] if server["server"] else "login01.cluster.zalf.de",
         "start-row": "230",
-        "end-row": "330",
+        "end-row": "336",
         "path_to_dem_grid": "",
         "sim.json": "sim.json",
         "crop.json": "crop.json",
@@ -316,9 +316,9 @@ def run_producer(server={"server": None, "port": None}, shared_id=None):
             "climate": ""
         })
 
-        for i in range(0, 5):
-            env_template["cropRotation"].append(copy.deepcopy(env_template["cropRotation"][0]))
-            env_template["cropRotation"].pop(0)
+        #for i in range(0, 5):
+        #    env_template["cropRotation"].append(copy.deepcopy(env_template["cropRotation"][0]))
+        #    env_template["cropRotation"].pop(0)
 
         # set shared id in template
         if config["shared_id"]:
